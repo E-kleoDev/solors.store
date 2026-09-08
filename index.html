@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solors Store — Скачать игры от Solors</title>
     <style>
-        /* Базовые настройки в стиле 90-х */
+        /* Базовые настройки */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -20,20 +20,23 @@
             
             color: #ffffff;
             font-family: "Courier New", Courier, monospace; /* Ретро-шрифт */
-            line-height: 1.5;
+            line-height: 1.6;
             padding: 20px;
             display: flex;
             justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
         }
 
-        /* Центральный контейнер (как старые табличные сайты) */
+        /* Центральный контейнер */
         .main-container {
             background-color: #111111; /* Контрастный темный фон */
             width: 100%;
-            max-width: 800px;
+            max-width: 800px; /* Ограничение по ширине */
             border: 3px double #ffffff; /* Олдскульная двойная рамка */
             padding: 30px;
             box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.1);
+            word-wrap: break-word; /* Автоперенос слишком длинных слов */
         }
 
         /* Шапка сайта */
@@ -47,7 +50,7 @@
         h1 {
             font-size: 2.5rem;
             letter-spacing: 2px;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
         }
 
         .subtitle {
@@ -56,30 +59,41 @@
             color: #888888;
         }
 
-        /* Сетка с играми */
+        /* Список игр теперь адаптивный */
         .games-list {
-            display: grid;
-            grid-template-columns: 1px; /* По умолчанию в один столбец */
-            gap: 20px;
+            display: flex;
+            flex-direction: column; /* Блоки идут строго друг за другом сверху вниз */
+            gap: 25px; /* Расстояние между блоками */
+            width: 100%;
         }
 
-        /* Карточка игры */
+        /* Исправленная карточка игры */
         .game-card {
             border: 1px solid #ffffff;
-            padding: 20px;
+            padding: 25px;
             background: #000000;
+            width: 100%; /* Блок занимает всю доступную ширину */
+            height: auto; /* Высота подстраивается под количество текста */
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* Выравнивание контента по левому краю */
         }
 
         .game-title {
             font-size: 1.4rem;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             font-weight: bold;
+            border-bottom: 1px dashed #333333;
+            width: 100%;
+            padding-bottom: 5px;
         }
 
         .game-desc {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: #cccccc;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            width: 100%;
+            white-space: normal; /* Разрешает тексту правильно переноситься на новые строки */
         }
 
         /* Кнопки в стиле 90-х */
@@ -87,13 +101,14 @@
             display: inline-block;
             background-color: #ffffff;
             color: #000000;
-            padding: 10px 20px;
+            padding: 12px 24px;
             text-decoration: none;
             font-weight: bold;
             font-size: 0.9rem;
             border: 2px solid #ffffff;
             transition: all 0.2s ease;
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         /* Эффект при наведении */
@@ -112,11 +127,26 @@
             font-size: 0.8rem;
             color: #666666;
         }
+
+        /* Адаптивность для мобильных экранов */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .main-container {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .game-card {
+                padding: 15px;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <!-- Главный блок по центру -->
     <div class="main-container">
         
         <header>
@@ -129,15 +159,15 @@
 
                 <!-- Игра 1 -->
                 <div class="game-card">
-                    <div class="game-title">[01] Название Игры 1</div>
-                    <p class="game-desc">Краткое описание вашей первой игры. Напишите здесь жанр, особенности и системные требования в пару строк.</p>
+                    <div class="game-title"> Название Игры 1</div>
+                    <p class="game-desc">Краткое описание вашей первой игры. Теперь сюда можно писать сколько угодно текста — блок автоматически растянется вниз, а текст аккуратно перенесется на следующую строку, не вылезая за белые границы карточки.</p>
                     <a href="ссылка_на_архив_игры1.zip" class="download-btn">Скачать .ZIP</a>
                 </div>
 
                 <!-- Игра 2 -->
                 <div class="game-card">
-                    <div class="game-title">[02] Название Игры 2</div>
-                    <p class="game-desc">Описание второй игры. Олдскульный геймплей, мрачная атмосфера и хардкорные уровни ждут вас.</p>
+                    <div class="game-title"> Название Игры 2</div>
+                    <p class="game-desc">Описание второй игры. Олдскульный геймплей, мрачная атмосфера и хардкорные уровни ждут вас. Вы можете добавлять сюда длинные списки особенностей или системных требований.</p>
                     <a href="ссылка_на_архив_игры2.zip" class="download-btn">Скачать .ZIP</a>
                 </div>
 
@@ -145,7 +175,7 @@
         </main>
 
         <footer>
-            <p>&copy; 2026 SOLORS. Все права защищены. Сделано в стиле золотой эпохи интернета.</p>
+            <p>&copy; 2026 SOLORS. Все права защищены. Оригинальный сайт SOLORS.</p>
         </footer>
 
     </div>
