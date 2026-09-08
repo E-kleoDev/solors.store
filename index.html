@@ -298,37 +298,35 @@
     <div class="main-container">
         
         <header>
-            <h1>SOLORS.STORE</h1>
+            <h1>SOLORS STORE</h1>
             <p class="subtitle">Игры от Солорс. Прямое скачивание.</p>
         </header>
 
         <main>
             <div class="games-list">
 
-                <!-- ================= ИГРА 1 (Все функции включены) ================= -->
+                <!-- ================= ИГРА 1 ================= -->
                 <div class="game-card">
-                    <!-- Иконка включена (true). Чтобы выключить, замените true на false -->
-                    <div class="game-header" data-has-icon="true">
+                    <!-- Иконка включена (true). -->
+                    <div class="game-header" data-has-icon="false">
                         <img class="game-icon" src="game1-icon.png" alt="icon">
                         <div class="game-title">Just A corridor</div>
                     </div>
                     
                     <div class="desc-container">
                         <p class="game-desc">
-                            Игра про коридор...
+                            Просто коридор...
                         </p>
                         <button class="more-btn" onclick="toggleDesc(this)">[...]</button>
                     </div>
 
-                    <!-- Скриншоты включены (true). Так как их 3 штуки, они автоматически станут слайдером -->
-                    <div class="screenshots-holder" data-has-screen="false">
-                        <div class="screen-title">Скриншоты геймплея:</div>
+                    <!-- Скриншоты включены (true). Если их 3 штуки, они автоматически станут слайдером -->
+                    <div class="screenshots-holder" data-has-screen="true">
+                        <div class="screen-title">Скриншоты:</div>
                         <div class="slider-wrapper">
                             <button class="slider-btn prev-btn">&lt;</button>
                             <div class="screenshots-grid">
-                                <img src="screen1.jpg" alt="Screen 1">
-                                <img src="screen2.jpg" alt="Screen 2">
-                                <img src="screen3.jpg" alt="Screen 3">
+                                <img src="justacorridorscreenshot1.jpg" alt="Screen 1">
                             </div>
                             <button class="slider-btn next-btn">&gt;</button>
                         </div>
@@ -339,7 +337,7 @@
                 </div>
 
 
-                <!-- ================= ИГРА 2 (Без иконки, 2 скриншота - сетка) ================= -->
+                <!-- ================= ИГРА 2 ================= -->
                 <div class="game-card">
                     <!-- Иконка выключена (false). Название автоматически сдвинуто влево -->
                     <div class="game-header" data-has-icon="false">
