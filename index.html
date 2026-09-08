@@ -17,7 +17,7 @@
             background-color: #000000;
             background-position: center center;
             background-repeat: repeat;
-            background-size: min(800px, 100%); /* Адаптивный размер фона */
+            background-size: min(800px, 100%);
             background-attachment: fixed;
             
             color: #ffffff;
@@ -77,13 +77,34 @@
             align-items: flex-start;
         }
 
-        .game-title {
-            font-size: 1.4rem;
-            margin-bottom: 12px;
-            font-weight: bold;
+        /* Заголовок с поддержкой иконки */
+        .game-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
             border-bottom: 1px dashed #333333;
             width: 100%;
-            padding-bottom: 5px;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+
+        .game-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+
+        /* Стили для иконки игры */
+        .game-icon {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            display: inline-block;
+            filter: grayscale(100%); /* Черно-белый ретро-стиль */
+        }
+
+        /* Скрываем иконку, если переключатель равен "false" */
+        .game-header[data-has-icon="false"] .game-icon {
+            display: none !important;
         }
 
         /* Контейнер для текста с ограничением */
@@ -95,27 +116,24 @@
             position: relative;
         }
 
-        /* Текст по умолчанию скрыт после 3-й строки */
         .game-desc {
             display: -webkit-box;
-            -webkit-line-clamp: 3; /* Количество строк до обрезки */
+            -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;  
             overflow: hidden;
             white-space: normal;
         }
 
-        /* Класс, который убирает ограничение при клике */
         .game-desc.expanded {
             display: block;
             overflow: visible;
         }
 
-        /* Ретро-кнопка троеточия */
         .more-btn {
             display: inline-block;
             background: none;
             border: none;
-            color: #ff0055; /* Контрастный ретро-цвет для клика */
+            color: #ff0055;
             font-family: inherit;
             font-size: 1rem;
             font-weight: bold;
@@ -133,9 +151,9 @@
             width: 100%;
             margin-bottom: 20px;
             padding-top: 10px;
+            position: relative;
         }
 
-        /* Скрываем скриншоты, если задан атрибут data-has-screen="false" */
         .screenshots-holder[data-has-screen="false"] {
             display: none !important;
         }
@@ -145,6 +163,13 @@
             text-transform: uppercase;
             color: #666666;
             margin-bottom: 8px;
+        }
+
+        .slider-wrapper {
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
         }
 
         .screenshots-grid {
@@ -158,17 +183,76 @@
             width: 100%;
             height: auto;
             border: 1px solid #333333;
-            filter: grayscale(100%); /* Наш черно-белый стиль для картинок */
+            filter: grayscale(100%);
             transition: filter 0.2s ease;
+            display: block;
         }
 
-        /* При наведении скриншот становится цветным / ярким */
         .screenshots-grid img:hover {
             filter: grayscale(0%);
             border-color: #ffffff;
         }
 
-        /* Кнопки */
+        .slider-active .screenshots-grid {
+            display: block;
+            overflow: hidden;
+            text-align: center;
+            background: #111;
+            border: 1px solid #333333;
+        }
+
+        .slider-active .screenshots-grid img {
+            display: none;
+            max-height: 400px;
+            width: auto;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .slider-active .screenshots-grid img.active {
+            display: block;
+        }
+
+        .slider-btn {
+            display: none;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #000000;
+            color: #ffffff;
+            border: 1px solid #ffffff;
+            font-family: inherit;
+            padding: 10px 15px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 10;
+            user-select: none;
+        }
+
+        .slider-btn:hover {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        .slider-active .slider-btn {
+            display: block;
+        }
+
+        .prev-btn { left: -15px; }
+        .next-btn { right: -15px; }
+
+        .slider-counter {
+            display: none;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #888888;
+            margin-top: 5px;
+        }
+        .slider-active .slider-counter {
+            display: block;
+        }
+
+        /* Кнопки скачивания */
         .download-btn {
             display: inline-block;
             background-color: #ffffff;
@@ -181,7 +265,7 @@
             transition: all 0.2s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-top: auto; /* Прижимает кнопку к низу карточки */
+            margin-top: auto;
         }
 
         .download-btn:hover {
@@ -204,7 +288,8 @@
             .main-container { padding: 15px; }
             h1 { font-size: 1.8rem; }
             .game-card { padding: 15px; }
-            .screenshots-grid { grid-template-columns: repeat(2, 1fr); }
+            .prev-btn { left: 0px; }
+            .next-btn { right: 0px; }
         }
     </style>
 </head>
@@ -213,16 +298,20 @@
     <div class="main-container">
         
         <header>
-            <h1>SOLORS STORE</h1>
+            <h1>SOLORS.STORE</h1>
             <p class="subtitle">Игры от Солорс. Прямое скачивание.</p>
         </header>
 
         <main>
             <div class="games-list">
 
-                <!-- ИГРА С ДЛИННЫМ ОПИСАНИЕМ И СКРИНШОТАМИ (true) -->
+                <!-- ================= ИГРА 1 (Все функции включены) ================= -->
                 <div class="game-card">
-                    <div class="game-title">Супер Игра со Скриншотами</div>
+                    <!-- Иконка включена (true). Чтобы выключить, замените true на false -->
+                    <div class="game-header" data-has-icon="true">
+                        <img class="game-icon" src="game1-icon.png" alt="icon">
+                        <div class="game-title">Супер Игра со Скриншотами</div>
+                    </div>
                     
                     <div class="desc-container">
                         <p class="game-desc">
@@ -231,53 +320,101 @@
                         <button class="more-btn" onclick="toggleDesc(this)">[...]</button>
                     </div>
 
-                    <!-- СКРИНШОТЫ ВКЛЮЧЕНЫ (data-has-screen="true") -->
+                    <!-- Скриншоты включены (true). Так как их 3 штуки, они автоматически станут слайдером -->
                     <div class="screenshots-holder" data-has-screen="true">
                         <div class="screen-title">Скриншоты геймплея:</div>
-                        <div class="screenshots-grid">
-                            <img src="screen1.jpg" alt="Screen 1">
-                            <img src="screen2.jpg" alt="Screen 2">
-                            <img src="screen3.jpg" alt="Screen 3">
+                        <div class="slider-wrapper">
+                            <button class="slider-btn prev-btn">&lt;</button>
+                            <div class="screenshots-grid">
+                                <img src="screen1.jpg" alt="Screen 1">
+                                <img src="screen2.jpg" alt="Screen 2">
+                                <img src="screen3.jpg" alt="Screen 3">
+                            </div>
+                            <button class="slider-btn next-btn">&gt;</button>
                         </div>
+                        <div class="slider-counter">Кадр: <span class="current-idx">1</span>/<span class="total-idx">3</span></div>
                     </div>
 
-                    <a href="#" class="download-btn">Скачать .ZIP</a>
+                    <a href="ссылка_на_игру1.zip" class="download-btn">Скачать .ZIP</a>
                 </div>
 
 
-                <!-- ИГРА БЕЗ СКРИНШОТОВ (false) И С КОРОТКИМ ОПИСАНИЕМ -->
+                <!-- ================= ИГРА 2 (Без иконки, 2 скриншота - сетка) ================= -->
                 <div class="game-card">
-                    <div class="game-title">Мрачный Ретро Платформер</div>
+                    <!-- Иконка выключена (false). Название автоматически сдвинуто влево -->
+                    <div class="game-header" data-has-icon="false">
+                        <img class="game-icon" src="game2-icon.png" alt="icon">
+                        <div class="game-title">Мрачный Ретро Платформер</div>
+                    </div>
                     
                     <div class="desc-container">
                         <p class="game-desc">
-                            Короткое описание. Текст маленький.</p>
+                            У этой игры короткое описание, поэтому кнопка с троеточием для него автоматически скрыта скриптом. Здесь загружено ровно 2 скриншота, поэтому они отображаются аккуратной статической сеткой в ряд без стрелок перелистывания.
+                        </p>
                         <button class="more-btn" onclick="toggleDesc(this)">[...]</button>
                     </div>
 
-                    <!-- СКРИНШОТЫ ВЫКЛЮЧЕНЫ (data-has-screen="false") -->
-                    <div class="screenshots-holder" data-has-screen="false">
+                    <!-- Скриншоты включены (true). До 2 штук включительно — отображаются плиткой -->
+                    <div class="screenshots-holder" data-has-screen="true">
                         <div class="screen-title">Скриншоты геймплея:</div>
-                        <div class="screenshots-grid">
-                            <img src="screen1.jpg" alt="Screen 1">
+                        <div class="slider-wrapper">
+                            <button class="slider-btn prev-btn">&lt;</button>
+                            <div class="screenshots-grid">
+                                <img src="screen1.jpg" alt="Screen 1">
+                                <img src="screen2.jpg" alt="Screen 2">
+                            </div>
+                            <button class="slider-btn next-btn">&gt;</button>
                         </div>
+                        <div class="slider-counter">Кадр: <span class="current-idx">1</span>/<span class="total-idx">2</span></div>
                     </div>
 
-                    <a href="#" class="download-btn">Скачать .ZIP</a>
+                    <a href="ссылка_на_игру2.zip" class="download-btn">Скачать .ZIP</a>
                 </div>
 
-            </div>
+
+                <!-- ================= ИГРА 3 (Без скриншотов) ================= -->
+                <div class="game-card">
+                    <!-- Иконка включена (true) -->
+                    <div class="game-header" data-has-icon="true">
+                        <img class="game-icon" src="game3-icon.png" alt="icon">
+                        <div class="game-title">Текстовый Квест от Solors</div>
+                    </div>
+                    
+                    <div class="desc-container">
+                        <p class="game-desc">
+                            Описание третьей игры. У этого проекта пока нет готовых скриншотов, поэтому блок картинок ниже полностью отключен. Вся карточка выглядит аккуратно, пустого места под изображения не остается.
+                        </p>
+                        <button class="more-btn" onclick="toggleDesc(this)">[...]</button>
+                    </div>
+
+                    <!-- Скриншоты выключены (false). Весь блок полностью скрыт на сайте -->
+                    <div class="screenshots-holder" data-has-screen="false">
+                        <div class="screen-title">Скриншоты геймплея:</div>
+                        <div class="slider-wrapper">
+                            <button class="slider-btn prev-btn">&lt;</button>
+                            <div class="screenshots-grid">
+                                <img src="screen1.jpg" alt="Screen 1">
+                            </div>
+                            <button class="slider-btn next-btn">&gt;</button>
+                        </div>
+                        <div class="slider-counter">Кадр: <span class="current-idx">1</span>/<span class="total-idx">1</span></div>
+                    </div>
+
+                    <a href="ссылка_на_игру3.zip" class="download-btn">Скачать .ZIP</a>
+                </div>
+
+            </div> <!-- Конец .games-list -->
         </main>
 
         <footer>
             <p>&copy; 2026 SOLORS. Все права защищены.</p>
         </footer>
 
-    </div>
+    </div> <!-- Конец .main-container -->
 
-    <!-- Умные скрипты для управления интерфейсом -->
+    <!-- Логика сайта (Обрезка текста, Слайдер) -->
     <script>
-        // Функция раскрытия текста
+        // Переключение разворачивания описания игры
         function toggleDesc(btn) {
             const desc = btn.previousElementSibling;
             if (desc.classList.contains('expanded')) {
@@ -289,14 +426,45 @@
             }
         }
 
-        // Проверка: нужно ли вообще показывать троеточие?
+        // Автоматическое скрытие кнопки [...], если текст слишком короткий
         document.querySelectorAll('.game-card').forEach(card => {
             const desc = card.querySelector('.game-desc');
             const btn = card.querySelector('.more-btn');
-            
-            // Если текст короткий и влезает без ограничений — прячем кнопку [...]
             if (desc.scrollHeight <= desc.clientHeight) {
                 btn.style.display = 'none';
+            }
+        });
+
+        // Инициализация зацикленных слайдеров для игр с > 2 скриншотами
+        document.querySelectorAll('.screenshots-holder').forEach(holder => {
+            if (holder.getAttribute('data-has-screen') === 'false') return;
+            const images = holder.querySelectorAll('.screenshots-grid img');
+            
+            if (images.length > 2) {
+                holder.classList.add('slider-active');
+                let currentIdx = 0;
+                images[currentIdx].classList.add('active');
+                
+                const currentLabel = holder.querySelector('.current-idx');
+                const totalLabel = holder.querySelector('.total-idx');
+                const prevBtn = holder.querySelector('.prev-btn');
+                const nextBtn = holder.querySelector('.next-btn');
+                
+                totalLabel.textContent = images.length;
+
+                function changeSlide(direction) {
+                    images[currentIdx].classList.remove('active');
+                    if (direction === 'next') {
+                        currentIdx = (currentIdx + 1) % images.length;
+                    } else if (direction === 'prev') {
+                        currentIdx = (currentIdx - 1 + images.length) % images.length;
+                    }
+                    images[currentIdx].classList.add('active');
+                    currentLabel.textContent = currentIdx + 1;
+                }
+
+                nextBtn.addEventListener('click', () => changeSlide('next'));
+                prevBtn.addEventListener('click', () => changeSlide('prev'));
             }
         });
     </script>
