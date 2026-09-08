@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solors Store — Скачать игры от Солорс</title>
+    <title>Solors Store — Скачать игры от Solors</title>
     <style>
         /* Базовые настройки */
         * {
@@ -13,13 +13,12 @@
         }
 
         body {
-            /* Установка фонового изображения background.jpeg */
             background-image: url('background.jpeg');
-            background-color: #000000; /* Резервный цвет, пока грузится картинка */
-            background-position: center center; /* Центрирование фона */
-            background-repeat: repeat; /* Запрет повторения картинки плиткой */
-            background-size: 35% auto; /* Растягивает картинку, чтобы закрыть весь экран */
-            background-attachment: fixed; /* Фиксирует фон на месте при скролле */
+            background-color: #000000;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: min(800px, 100%); /* Адаптивный размер фона */
+            background-attachment: fixed;
             
             color: #ffffff;
             font-family: "Courier New", Courier, monospace;
@@ -31,18 +30,16 @@
             min-height: 100vh;
         }
 
-        /* Центральный контейнер */
         .main-container {
-            background-color: rgba(17, 17, 17, 0.95); /* Полупрозрачный черный (0.95), чтобы текст отлично читался на любом фоне */
+            background-color: rgba(17, 17, 17, 0.96);
             width: 100%;
             max-width: 800px;
             border: 3px double #ffffff;
             padding: 30px;
-            box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.7);
+            box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.9);
             word-wrap: break-word;
         }
 
-        /* Шапка сайта */
         header {
             text-align: center;
             border-bottom: 2px dashed #ffffff;
@@ -62,15 +59,13 @@
             color: #888888;
         }
 
-        /* Список игр */
         .games-list {
             display: flex;
             flex-direction: column;
-            gap: 25px;
+            gap: 30px;
             width: 100%;
         }
 
-        /* Карточка игры */
         .game-card {
             border: 1px solid #ffffff;
             padding: 25px;
@@ -91,12 +86,86 @@
             padding-bottom: 5px;
         }
 
-        .game-desc {
+        /* Контейнер для текста с ограничением */
+        .desc-container {
             font-size: 0.95rem;
             color: #cccccc;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             width: 100%;
+            position: relative;
+        }
+
+        /* Текст по умолчанию скрыт после 3-й строки */
+        .game-desc {
+            display: -webkit-box;
+            -webkit-line-clamp: 3; /* Количество строк до обрезки */
+            -webkit-box-orient: vertical;  
+            overflow: hidden;
             white-space: normal;
+        }
+
+        /* Класс, который убирает ограничение при клике */
+        .game-desc.expanded {
+            display: block;
+            overflow: visible;
+        }
+
+        /* Ретро-кнопка троеточия */
+        .more-btn {
+            display: inline-block;
+            background: none;
+            border: none;
+            color: #ff0055; /* Контрастный ретро-цвет для клика */
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 2px 5px;
+            margin-top: 5px;
+        }
+        .more-btn:hover {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        /* Блок скриншотов */
+        .screenshots-holder {
+            width: 100%;
+            margin-bottom: 20px;
+            padding-top: 10px;
+        }
+
+        /* Скрываем скриншоты, если задан атрибут data-has-screen="false" */
+        .screenshots-holder[data-has-screen="false"] {
+            display: none !important;
+        }
+
+        .screen-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: #666666;
+            margin-bottom: 8px;
+        }
+
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            width: 100%;
+        }
+
+        .screenshots-grid img {
+            width: 100%;
+            height: auto;
+            border: 1px solid #333333;
+            filter: grayscale(100%); /* Наш черно-белый стиль для картинок */
+            transition: filter 0.2s ease;
+        }
+
+        /* При наведении скриншот становится цветным / ярким */
+        .screenshots-grid img:hover {
+            filter: grayscale(0%);
+            border-color: #ffffff;
         }
 
         /* Кнопки */
@@ -112,6 +181,7 @@
             transition: all 0.2s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
+            margin-top: auto; /* Прижимает кнопку к низу карточки */
         }
 
         .download-btn:hover {
@@ -120,7 +190,6 @@
             cursor: pointer;
         }
 
-        /* Подвал */
         footer {
             margin-top: 40px;
             border-top: 1px solid #333333;
@@ -130,20 +199,12 @@
             color: #666666;
         }
 
-        /* Адаптивность для мобильных экранов */
         @media (max-width: 600px) {
-            body {
-                padding: 10px;
-            }
-            .main-container {
-                padding: 15px;
-            }
-            h1 {
-                font-size: 1.8rem;
-            }
-            .game-card {
-                padding: 15px;
-            }
+            body { padding: 10px; }
+            .main-container { padding: 15px; }
+            h1 { font-size: 1.8rem; }
+            .game-card { padding: 15px; }
+            .screenshots-grid { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
@@ -153,24 +214,57 @@
         
         <header>
             <h1>SOLORS STORE</h1>
-            <p class="subtitle">Игры от Solors. Прямое скачивание.</p>
+            <p class="subtitle">Игры от Солорс. Прямое скачивание.</p>
         </header>
 
         <main>
             <div class="games-list">
 
-                <!-- Игра 1 -->
+                <!-- ИГРА С ДЛИННЫМ ОПИСАНИЕМ И СКРИНШОТАМИ (true) -->
                 <div class="game-card">
-                    <div class="game-title"> Название Игры 1</div>
-                    <p class="game-desc">Краткое описание вашей первой игры. Теперь сюда можно писать сколько угодно текста — блок автоматически растянется вниз, а текст аккуратно перенесется на следующую строку, не вылезая за белые границы карточки.</p>
-                    <a href="ссылка_на_архив_игры1.zip" class="download-btn">Скачать .ZIP</a>
+                    <div class="game-title">Супер Игра со Скриншотами</div>
+                    
+                    <div class="desc-container">
+                        <p class="game-desc">
+                            Это пример очень длинного описания игры от Solors. Здесь может быть написано колоссальное количество текста, включая сюжет, перечисление игровых механик, отзывы прессы и системные требования. Благодаря встроенному скрипту, этот текст не займет много места сразу. Он аккуратно обрежется на третьей строке, чтобы дизайн сайта оставался чистым, компактным и структурированным в духе минимализма 90-х годов. Нажмите на троеточие ниже, чтобы прочесть этот огромный текст целиком!
+                        </p>
+                        <button class="more-btn" onclick="toggleDesc(this)">[...]</button>
+                    </div>
+
+                    <!-- СКРИНШОТЫ ВКЛЮЧЕНЫ (data-has-screen="true") -->
+                    <div class="screenshots-holder" data-has-screen="true">
+                        <div class="screen-title">Скриншоты геймплея:</div>
+                        <div class="screenshots-grid">
+                            <img src="screen1.jpg" alt="Screen 1">
+                            <img src="screen2.jpg" alt="Screen 2">
+                            <img src="screen3.jpg" alt="Screen 3">
+                        </div>
+                    </div>
+
+                    <a href="#" class="download-btn">Скачать .ZIP</a>
                 </div>
 
-                <!-- Игра 2 -->
+
+                <!-- ИГРА БЕЗ СКРИНШОТОВ (false) И С КОРОТКИМ ОПИСАНИЕМ -->
                 <div class="game-card">
-                    <div class="game-title"> Название Игры 2</div>
-                    <p class="game-desc">Описание второй игры. Олдскульный геймплей, мрачная атмосфера и хардкорные уровни ждут вас. Вы можете добавлять сюда длинные списки особенностей или системных требований.</p>
-                    <a href="ссылка_на_архив_игры2.zip" class="download-btn">Скачать .ZIP</a>
+                    <div class="game-title">Мрачный Ретро Платформер</div>
+                    
+                    <div class="desc-container">
+                        <p class="game-desc">
+                            Короткое описание. Текст маленький, поэтому кнопка с троеточием для него автоматически скрыта, так как скрывать нечего.
+                        </p>
+                        <button class="more-btn" onclick="toggleDesc(this)">[...]</button>
+                    </div>
+
+                    <!-- СКРИНШОТЫ ВЫКЛЮЧЕНЫ (data-has-screen="false") -->
+                    <div class="screenshots-holder" data-has-screen="false">
+                        <div class="screen-title">Скриншоты геймплея:</div>
+                        <div class="screenshots-grid">
+                            <img src="screen1.jpg" alt="Screen 1">
+                        </div>
+                    </div>
+
+                    <a href="#" class="download-btn">Скачать .ZIP</a>
                 </div>
 
             </div>
@@ -181,6 +275,32 @@
         </footer>
 
     </div>
+
+    <!-- Умные скрипты для управления интерфейсом -->
+    <script>
+        // Функция раскрытия текста
+        function toggleDesc(btn) {
+            const desc = btn.previousElementSibling;
+            if (desc.classList.contains('expanded')) {
+                desc.classList.remove('expanded');
+                btn.textContent = '[...]';
+            } else {
+                desc.classList.add('expanded');
+                btn.textContent = '[свернуть]';
+            }
+        }
+
+        // Проверка: нужно ли вообще показывать троеточие?
+        document.querySelectorAll('.game-card').forEach(card => {
+            const desc = card.querySelector('.game-desc');
+            const btn = card.querySelector('.more-btn');
+            
+            // Если текст короткий и влезает без ограничений — прячем кнопку [...]
+            if (desc.scrollHeight <= desc.clientHeight) {
+                btn.style.display = 'none';
+            }
+        });
+    </script>
 
 </body>
 </html>
