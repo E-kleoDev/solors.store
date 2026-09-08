@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solors Store — Скачать игры от Solors</title>
+    <title>Solors Store — Скачать игры от Солорс</title>
     <style>
         /* Базовые настройки */
         * {
@@ -13,13 +13,16 @@
         }
 
         body {
-            /* Современный черный фон с тонкими белыми полосами */
-            background-color: #000000;
-            background-image: linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
-            background-size: 40px 100%;
+            /* Установка фонового изображения background.jpeg */
+            background-image: url('background.jpeg');
+            background-color: #000000; /* Резервный цвет, пока грузится картинка */
+            background-position: center center; /* Центрирование фона */
+            background-repeat: no-repeat; /* Запрет повторения картинки плиткой */
+            background-size: cover; /* Растягивает картинку, чтобы закрыть весь экран */
+            background-attachment: fixed; /* Фиксирует фон на месте при скролле */
             
             color: #ffffff;
-            font-family: "Courier New", Courier, monospace; /* Ретро-шрифт */
+            font-family: "Courier New", Courier, monospace;
             line-height: 1.6;
             padding: 20px;
             display: flex;
@@ -30,13 +33,13 @@
 
         /* Центральный контейнер */
         .main-container {
-            background-color: #111111; /* Контрастный темный фон */
+            background-color: rgba(17, 17, 17, 0.95); /* Полупрозрачный черный (0.95), чтобы текст отлично читался на любом фоне */
             width: 100%;
-            max-width: 800px; /* Ограничение по ширине */
-            border: 3px double #ffffff; /* Олдскульная двойная рамка */
+            max-width: 800px;
+            border: 3px double #ffffff;
             padding: 30px;
-            box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.1);
-            word-wrap: break-word; /* Автоперенос слишком длинных слов */
+            box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.7);
+            word-wrap: break-word;
         }
 
         /* Шапка сайта */
@@ -59,24 +62,24 @@
             color: #888888;
         }
 
-        /* Список игр теперь адаптивный */
+        /* Список игр */
         .games-list {
             display: flex;
-            flex-direction: column; /* Блоки идут строго друг за другом сверху вниз */
-            gap: 25px; /* Расстояние между блоками */
+            flex-direction: column;
+            gap: 25px;
             width: 100%;
         }
 
-        /* Исправленная карточка игры */
+        /* Карточка игры */
         .game-card {
             border: 1px solid #ffffff;
             padding: 25px;
             background: #000000;
-            width: 100%; /* Блок занимает всю доступную ширину */
-            height: auto; /* Высота подстраивается под количество текста */
+            width: 100%;
+            height: auto;
             display: flex;
             flex-direction: column;
-            align-items: flex-start; /* Выравнивание контента по левому краю */
+            align-items: flex-start;
         }
 
         .game-title {
@@ -93,10 +96,10 @@
             color: #cccccc;
             margin-bottom: 20px;
             width: 100%;
-            white-space: normal; /* Разрешает тексту правильно переноситься на новые строки */
+            white-space: normal;
         }
 
-        /* Кнопки в стиле 90-х */
+        /* Кнопки */
         .download-btn {
             display: inline-block;
             background-color: #ffffff;
@@ -111,7 +114,6 @@
             letter-spacing: 1px;
         }
 
-        /* Эффект при наведении */
         .download-btn:hover {
             background-color: #000000;
             color: #ffffff;
@@ -175,7 +177,7 @@
         </main>
 
         <footer>
-            <p>&copy; 2026 SOLORS. Все права защищены. Оригинальный сайт SOLORS.</p>
+            <p>&copy; 2026 SOLORS. Все права защищены.</p>
         </footer>
 
     </div>
