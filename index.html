@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solors Store — Скачать игры от Solors</title>
+
     <style>
         /* Базовые настройки */
         * {
@@ -19,11 +20,12 @@
             background-repeat: no-repeat;
             background-size: min(800px, 100%);
             background-attachment: fixed;
-            
+
             color: #ffffff;
             font-family: "Courier New", Courier, monospace;
             line-height: 1.6;
             padding: 20px;
+
             display: flex;
             justify-content: center;
             align-items: flex-start;
@@ -36,7 +38,7 @@
             max-width: 800px;
             border: 3px double #ffffff;
             padding: 30px;
-            box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.9);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
             word-wrap: break-word;
         }
 
@@ -72,16 +74,18 @@
             background: #000000;
             width: 100%;
             height: auto;
+
             display: flex;
             flex-direction: column;
             align-items: flex-start;
         }
 
-        /* Заголовок с поддержкой иконки */
+        /* Заголовок игры */
         .game-header {
             display: flex;
             align-items: center;
             gap: 15px;
+
             border-bottom: 1px dashed #333333;
             width: 100%;
             padding-bottom: 8px;
@@ -91,24 +95,30 @@
         .game-title {
             font-size: 1.4rem;
             font-weight: bold;
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            width: 100%;
         }
 
         .game-date {
             font-size: 0.85rem;
-            color: #888888;
             font-weight: normal;
-            margin-left: 8px;
+            color: #777777;
+            white-space: nowrap;
         }
 
-        .version-badge {
-            font-size: 0.75rem;
+        /* Заголовок версии */
+        .versions-header {
+            width: 100%;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .versions-header:hover .game-title {
             color: #ff0055;
+        }
+
+        .version-arrow {
             margin-left: auto;
-            text-transform: uppercase;
+            color: #888888;
+            font-size: 0.9rem;
         }
 
         /* Стили для иконки игры */
@@ -118,14 +128,14 @@
             object-fit: contain;
             display: inline-block;
             filter: grayscale(100%);
+            flex-shrink: 0;
         }
 
-        /* Скрываем иконку, если переключатель равен "false" */
         .game-header[data-has-icon="false"] .game-icon {
             display: none !important;
         }
 
-        /* Контейнер для текста с ограничением */
+        /* Контейнер описания */
         .desc-container {
             font-size: 0.95rem;
             color: #cccccc;
@@ -137,7 +147,7 @@
         .game-desc {
             display: -webkit-box;
             -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;  
+            -webkit-box-orient: vertical;
             overflow: hidden;
             white-space: normal;
         }
@@ -159,20 +169,80 @@
             padding: 2px 5px;
             margin-top: 5px;
         }
+
         .more-btn:hover {
             background-color: #ffffff;
             color: #000000;
         }
 
-        .version-tag {
+        /* Блок версий */
+        .versions-container {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .versions-list {
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #333333;
+        }
+
+        .versions-container.expanded .versions-list {
+            display: flex;
+        }
+
+        .version-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+
+            padding: 10px;
+            border: 1px solid #333333;
+            background: #050505;
+        }
+
+        .version-name {
+            color: #cccccc;
+        }
+
+        .version-download {
+            color: #ffffff;
+            text-decoration: none;
+            border: 1px solid #ffffff;
+            padding: 5px 10px;
             font-size: 0.8rem;
-            background: #222;
-            color: #fff;
-            border-left: 3px solid #fff;
-            padding: 2px 8px;
-            margin-bottom: 15px;
-            display: inline-block;
-            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .version-download:hover {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        /* Последняя версия */
+        .latest-version {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #cccccc;
+        }
+
+        .latest-label {
+            color: #666666;
+            font-size: 0.8rem;
+        }
+
+        /* Когда версия является выпадающим списком */
+        .versions-container.has-multiple .latest-version {
+            cursor: pointer;
+        }
+
+        .versions-container.has-multiple .latest-version:hover {
+            color: #ff0055;
         }
 
         /* Блок скриншотов */
@@ -222,7 +292,6 @@
             border-color: #ffffff;
         }
 
-        /* Режим активного слайдера (> 2 картинок) */
         .slider-active .screenshots-grid {
             display: block;
             overflow: hidden;
@@ -268,8 +337,13 @@
             display: block;
         }
 
-        .prev-btn { left: -15px; }
-        .next-btn { right: -15px; }
+        .prev-btn {
+            left: -15px;
+        }
+
+        .next-btn {
+            right: -15px;
+        }
 
         .slider-counter {
             display: none;
@@ -278,6 +352,7 @@
             color: #888888;
             margin-top: 5px;
         }
+
         .slider-active .slider-counter {
             display: block;
         }
@@ -314,192 +389,542 @@
         }
 
         @media (max-width: 600px) {
-            body { padding: 10px; }
-            .main-container { padding: 15px; }
-            h1 { font-size: 1.8rem; }
-            .game-card { padding: 15px; }
-            .prev-btn { left: 0px; }
-            .next-btn { right: 0px; }
+            body {
+                padding: 10px;
+            }
+
+            .main-container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .game-card {
+                padding: 15px;
+            }
+
+            .prev-btn {
+                left: 0;
+            }
+
+            .next-btn {
+                right: 0;
+            }
+
+            .game-date {
+                white-space: normal;
+            }
+
+            .version-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
     </style>
 </head>
+
 <body>
 
-    <div class="main-container">
-        
-        <header>
-            <h1>SOLORS STORE</h1>
-            <p class="subtitle">Игры от Солорс. Прямое скачивание.</p>
-        </header>
+<div class="main-container">
 
-        <main>
-            <div class="games-list">
+    <header>
+        <h1>SOLORS.STORE</h1>
+        <p class="subtitle">Игры от Solors. Прямое скачивание.</p>
+    </header>
 
-                <!-- ================= ИГРА 1 ================= -->
-                <div class="game-card" data-has-versions="false">
-                    <div class="game-header" data-has-icon="true">
-                        <img class="game-icon" src="game1-icon.png" alt="icon">
-                        <div class="game-title">Just A Corridor <span class="game-date">(15.03.2026)</span></div>
+    <main>
+        <div class="games-list">
+
+            <!-- ================= ИГРА 1 ================= -->
+            <div class="game-card">
+
+                <!--
+                    НАСТРОЙКИ ИГРЫ:
+
+                    hasVersions:
+                    true  = у игры несколько версий
+                    false = обычная игра с одной версией
+
+                    latestVersion:
+                    версия, которая показывается в свёрнутом состоянии
+
+                    versions:
+                    список всех существующих версий
+                -->
+
+                <div class="game-header versions-header"
+                     data-has-icon="true"
+                     data-has-versions="true"
+                     onclick="toggleVersions(this)">
+
+                    <img class="game-icon"
+                         src="game1-icon.png"
+                         alt="icon">
+
+                    <div class="game-title">
+                        Супер Игра со Скриншотами
+                        <span class="game-date">(15.03.2026)</span>
                     </div>
-                    
-                    <div class="desc-container">
-                        <p class="game-desc">Просто коридор...</p>
-                        <button class="more-btn" onclick="toggleDesc(this)">[...]</button>
-                    </div>
 
-                    <div class="screenshots-holder" data-has-screen="true">
-                        <div class="screen-title">Скриншоты:</div>
-                        <div class="slider-wrapper">
-                            <button class="slider-btn prev-btn">&lt;</button>
-                            <div class="screenshots-grid">
-                                <img src="justacorridorscreenshot1.png" alt="Screen 1">
-                            </div>
-                            <button class="slider-btn next-btn">&gt;</button>
-                        </div>
-                        <div class="slider-counter">Кадр: <span class="current-idx">1</span>/<span class="total-idx">3</span></div>
-                    </div>
-
-                    <a href="just_a_corridor_v1.0.zip" class="download-btn">Скачать .ZIP</a>
+                    <div class="version-arrow">▼</div>
                 </div>
 
+                <div class="desc-container">
+                    <p class="game-desc">
+                        Это пример очень длинного описания игры от Solors.
+                        Здесь может быть написано колоссальное количество текста,
+                        включая сюжет, перечисление игровых механик, отзывы прессы
+                        и системные требования. Благодаря встроенному скрипту,
+                        этот текст не займет много места сразу. Он аккуратно
+                        обрежется на третьей строке, чтобы дизайн сайта оставался
+                        чистым, компактным и структурированным в духе минимализма
+                        90-х годов. Нажмите на троеточие ниже, чтобы прочесть
+                        этот огромный текст целиком!
+                    </p>
 
-                <!-- ================= ИГРА 2 ================= -->
-                <div class="game-card version-master-card" data-has-versions="true">
-                    
-                    <div class="game-header toggle-versions-btn" data-has-icon="true" style="cursor: pointer;">
-                        <img class="game-icon" src="game2-icon.png" alt="icon">
-                        <div class="game-title">Король Гномстопии 2 <span class="game-date">(Обновлено: 01.09.2026)</span> <span class="version-badge">[История версий ▾]</span></div>
+                    <button class="more-btn"
+                            onclick="toggleDesc(this)">
+                        [...]
+                    </button>
+                </div>
+
+                <!-- ВЕРСИИ ИГРЫ -->
+                <div class="versions-container has-multiple">
+
+                    <!-- Последняя версия -->
+                    <div class="latest-version">
+                        <span class="latest-label">Последняя версия:</span>
+                        <span>v1.3</span>
                     </div>
 
-                    <div class="latest-version-content" style="width: 100%;">
-                        <div class="version-tag">ПОСЛЕДНЯЯ ВЕРСИЯ: v2.0-Финал</div>
-                        <div class="desc-container">
-                            <p class="game-desc">
-                                Korol Gnomstopii 2 - это увлекательный и сложный платформер, в котором вы играете за гнома и должны проходить уровни. Проходить уровни будет непросто, ведь коварные рыцари расставили ловушки в виде шипов или лазеров, а их босс не так прост, как кажется на первый взгляд. В игре есть рейтинговая система. Скоро выйдет ремастер!
-                            </p>
-                            <button class="more-btn" onclick="toggleDesc(this)">[...]</button>
+                    <!-- Все версии -->
+                    <div class="versions-list">
+
+                        <div class="version-item">
+                            <span class="version-name">v1.3 — последняя</span>
+                            <a href="game1-v1.3.zip"
+                               class="version-download">
+                                Скачать
+                            </a>
                         </div>
 
-                        <div class="screenshots-holder" data-has-screen="true">
-                            <div class="screen-title">Скриншоты геймплея:</div>
-                            <div class="slider-wrapper">
-                                <button class="slider-btn prev-btn">&lt;</button>
-                                <div class="screenshots-grid">
-                                    <img src="screen1.jpg" alt="Screen 1">
-                                    <img src="screen2.jpg" alt="Screen 2">
-                                </div>
-                                <button class="slider-btn next-btn">&gt;</button>
-                            </div>
-                            <div class="slider-counter">Кадр: <span class="current-idx">1</span>/<span class="total-idx">2</span></div>
+                        <div class="version-item">
+                            <span class="version-name">v1.2</span>
+                            <a href="game1-v1.2.zip"
+                               class="version-download">
+                                Скачать
+                            </a>
                         </div>
 
-                        <a href="gnomstopia_v2.0.zip" class="download-btn">Скачать v2.0 .ZIP</a>
-                    </div>
-
-                    <div class="old-versions-container" style="display: none; width: 100%; margin-top: 20px; border-top: 1px dashed #555; padding-top: 20px;">
-                        
-                        <div class="old-version-item" style="border: 1px solid #333; padding: 15px; margin-bottom: 15px; background: #111;">
-                            <div style="font-weight: bold; margin-bottom: 5px;">ВЕРСИЯ: v1.5 <span style="color: #666; font-size: 0.8rem;">(Вышла: 10.05.2026)</span></div>
-                            <p style="font-size: 0.85rem; color: #aaa; margin-bottom: 10px;">ЯЯЯЯйца.</p>
-                            <a href="gnomstopia_v1.5.zip" class="download-btn" style="padding: 6px 12px; font-size: 0.8rem;">Скачать v1.5</a>
+                        <div class="version-item">
+                            <span class="version-name">v1.1</span>
+                            <a href="game1-v1.1.zip"
+                               class="version-download">
+                                Скачать
+                            </a>
                         </div>
 
-                        <div class="old-version-item" style="border: 1px solid #333; padding: 15px; background: #111;">
-                            <div style="font-weight: bold; margin-bottom: 5px;">ВЕРСИЯ: v1.0-Альфа <span style="color: #666; font-size: 0.8rem;">(Вышла: 01.02.2026)</span></div>
-                            <p style="font-size: 0.85rem; color: #aaa; margin-bottom: 10px;">Попа жопа 1.</p>
-                            <a href="gnomstopia_v1.0.zip" class="download-btn" style="padding: 6px 12px; font-size: 0.8rem;">Скачать v1.0</a>
+                        <div class="version-item">
+                            <span class="version-name">v1.0</span>
+                            <a href="game1-v1.0.zip"
+                               class="version-download">
+                                Скачать
+                            </a>
                         </div>
 
                     </div>
+                </div>
+
+                <!-- Скриншоты -->
+                <div class="screenshots-holder"
+                     data-has-screen="true">
+
+                    <div class="screen-title">
+                        Скриншоты геймплея:
+                    </div>
+
+                    <div class="slider-wrapper">
+
+                        <button class="slider-btn prev-btn">
+                            &lt;
+                        </button>
+
+                        <div class="screenshots-grid">
+
+                            <img src="screen1.jpg"
+                                 alt="Screen 1">
+
+                            <img src="screen2.jpg"
+                                 alt="Screen 2">
+
+                            <img src="screen3.jpg"
+                                 alt="Screen 3">
+
+                        </div>
+
+                        <button class="slider-btn next-btn">
+                            &gt;
+                        </button>
+
+                    </div>
+
+                    <div class="slider-counter">
+                        Кадр:
+                        <span class="current-idx">1</span>/
+                        <span class="total-idx">3</span>
+                    </div>
+
                 </div>
 
             </div>
-        </main>
 
-        <footer>
-            <p>&copy; 2026 SOLORS. Все права защищены.</p>
-        </footer>
 
-    </div>
+            <!-- ================= ИГРА 2 ================= -->
+            <div class="game-card">
 
-    <script>
-        function toggleDesc(btn) {
-            const desc = btn.closest('.desc-container').querySelector('.game-desc');
-            if (desc.classList.contains('expanded')) {
-                desc.classList.remove('expanded');
-                btn.textContent = '[...]';
-            } else {
-                desc.classList.add('expanded');
-                btn.textContent = '[свернуть]';
-            }
+                <div class="game-header"
+                     data-has-icon="false"
+                     data-has-versions="false">
+
+                    <img class="game-icon"
+                         src="game2-icon.png"
+                         alt="icon">
+
+                    <div class="game-title">
+                        Мрачный Ретро Платформер
+                        <span class="game-date">(20.05.2026)</span>
+                    </div>
+
+                </div>
+
+                <div class="desc-container">
+
+                    <p class="game-desc">
+                        У этой игры короткое описание, поэтому кнопка с
+                        троеточием для него автоматически скрыта скриптом.
+                        Здесь загружено ровно 2 скриншота, поэтому они
+                        отображаются аккуратной статической сеткой в ряд
+                        без стрелок перелистывания.
+                    </p>
+
+                    <button class="more-btn"
+                            onclick="toggleDesc(this)">
+                        [...]
+                    </button>
+
+                </div>
+
+                <div class="versions-container">
+
+                    <div class="latest-version">
+                        <span class="latest-label">Версия:</span>
+                        <span>v1.0</span>
+                    </div>
+
+                </div>
+
+                <!-- Скриншоты -->
+                <div class="screenshots-holder"
+                     data-has-screen="true">
+
+                    <div class="screen-title">
+                        Скриншоты геймплея:
+                    </div>
+
+                    <div class="slider-wrapper">
+
+                        <button class="slider-btn prev-btn">
+                            &lt;
+                        </button>
+
+                        <div class="screenshots-grid">
+
+                            <img src="screen1.jpg"
+                                 alt="Screen 1">
+
+                            <img src="screen2.jpg"
+                                 alt="Screen 2">
+
+                        </div>
+
+                        <button class="slider-btn next-btn">
+                            &gt;
+                        </button>
+
+                    </div>
+
+                    <div class="slider-counter">
+                        Кадр:
+                        <span class="current-idx">1</span>/
+                        <span class="total-idx">2</span>
+                    </div>
+
+                </div>
+
+                <a href="ссылка_на_игру2.zip"
+                   class="download-btn">
+                    Скачать .ZIP
+                </a>
+
+            </div>
+
+
+            <!-- ================= ИГРА 3 ================= -->
+            <div class="game-card">
+
+                <div class="game-header"
+                     data-has-icon="true"
+                     data-has-versions="false">
+
+                    <img class="game-icon"
+                         src="game3-icon.png"
+                         alt="icon">
+
+                    <div class="game-title">
+                        Текстовый Квест от Solors
+                        <span class="game-date">(01.08.2026)</span>
+                    </div>
+
+                </div>
+
+                <div class="desc-container">
+
+                    <p class="game-desc">
+                        Описание третьей игры. У этого проекта пока нет
+                        готовых скриншотов, поэтому блок картинок ниже
+                        полностью отключен. Вся карточка выглядит аккуратно,
+                        пустого места под изображения не остается.
+                    </p>
+
+                    <button class="more-btn"
+                            onclick="toggleDesc(this)">
+                        [...]
+                    </button>
+
+                </div>
+
+                <div class="versions-container">
+
+                    <div class="latest-version">
+                        <span class="latest-label">Версия:</span>
+                        <span>v1.0</span>
+                    </div>
+
+                </div>
+
+                <!-- Скриншоты выключены -->
+                <div class="screenshots-holder"
+                     data-has-screen="false">
+
+                    <div class="screen-title">
+                        Скриншоты геймплея:
+                    </div>
+
+                    <div class="slider-wrapper">
+
+                        <button class="slider-btn prev-btn">
+                            &lt;
+                        </button>
+
+                        <div class="screenshots-grid">
+
+                            <img src="screen1.jpg"
+                                 alt="Screen 1">
+
+                        </div>
+
+                        <button class="slider-btn next-btn">
+                            &gt;
+                        </button>
+
+                    </div>
+
+                    <div class="slider-counter">
+                        Кадр:
+                        <span class="current-idx">1</span>/
+                        <span class="total-idx">1</span>
+                    </div>
+
+                </div>
+
+                <a href="ссылка_на_игру3.zip"
+                   class="download-btn">
+                    Скачать .ZIP
+                </a>
+
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 SOLORS. Все права защищены.</p>
+    </footer>
+
+</div>
+
+
+<script>
+
+    /* =========================================================
+       ОПИСАНИЕ ИГРЫ
+       ========================================================= */
+
+    function toggleDesc(btn) {
+
+        const desc = btn.previousElementSibling;
+
+        if (desc.classList.contains('expanded')) {
+
+            desc.classList.remove('expanded');
+            btn.textContent = '[...]';
+
+        } else {
+
+            desc.classList.add('expanded');
+            btn.textContent = '[свернуть]';
+
+        }
+    }
+
+
+    /* =========================================================
+       ВЫПАДАЮЩИЕ ВЕРСИИ
+       ========================================================= */
+
+    function toggleVersions(header) {
+
+        const card = header.closest('.game-card');
+        const versions = card.querySelector('.versions-container');
+
+        if (!versions ||
+            header.dataset.hasVersions !== 'true') {
+            return;
         }
 
-        document.querySelectorAll('.game-card').forEach(card => {
-            const desc = card.querySelector('.game-desc');
-            if (desc) {
-                if (desc.scrollHeight <= desc.clientHeight) {
-                    const btn = card.querySelector('.more-btn');
-                    if (btn) btn.style.display = 'none';
-                }
-            }
-        });
+        versions.classList.toggle('expanded');
 
-        document.querySelectorAll('.toggle-versions-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const card = this.closest('.version-master-card');
-                const oldVersionsBlock = card.querySelector('.old-versions-container');
-                const badge = this.querySelector('.version-badge');
-                
-                if (oldVersionsBlock.style.display === 'none') {
-                    oldVersionsBlock.style.display = 'block';
-                    badge.textContent = '[Свернуть историю ▴]';
-                } else {
-                    oldVersionsBlock.style.display = 'none';
-                    badge.textContent = '[История версий ▾]';
-                }
-            });
-        });
+        const arrow = header.querySelector('.version-arrow');
 
-        document.querySelectorAll('.screenshots-holder').forEach(holder => {
-            if (holder.getAttribute('data-has-screen') === 'false') return;
-            const images = holder.querySelectorAll('.screenshots-grid img');
-            
-            if (images.length > 0) {
-                images[0].classList.add('active');
+        if (arrow) {
+
+            if (versions.classList.contains('expanded')) {
+                arrow.textContent = '▲';
+            } else {
+                arrow.textContent = '▼';
             }
-            
+
+        }
+    }
+
+
+    /* =========================================================
+       АВТОМАТИЧЕСКОЕ СКРЫТИЕ [...]
+       ========================================================= */
+
+    document.querySelectorAll('.game-card').forEach(card => {
+
+        const desc = card.querySelector('.game-desc');
+        const btn = card.querySelector('.more-btn');
+
+        if (!desc || !btn) {
+            return;
+        }
+
+        if (desc.scrollHeight <= desc.clientHeight) {
+            btn.style.display = 'none';
+        }
+
+    });
+
+
+    /* =========================================================
+       СЛАЙДЕРЫ
+       ========================================================= */
+
+    document.querySelectorAll('.screenshots-holder')
+        .forEach(holder => {
+
+            if (
+                holder.getAttribute('data-has-screen') === 'false'
+            ) {
+                return;
+            }
+
+            const images =
+                holder.querySelectorAll('.screenshots-grid img');
+
             if (images.length > 2) {
+
                 holder.classList.add('slider-active');
+
                 let currentIdx = 0;
-                
-                const currentLabel = holder.querySelector('.current-idx');
-                const totalLabel = holder.querySelector('.total-idx');
-                const prevBtn = holder.querySelector('.prev-btn');
-                const nextBtn = holder.querySelector('.next-btn');
-                
-                totalLabel.textContent = images.length;
+
+                images[currentIdx]
+                    .classList.add('active');
+
+                const currentLabel =
+                    holder.querySelector('.current-idx');
+
+                const totalLabel =
+                    holder.querySelector('.total-idx');
+
+                const prevBtn =
+                    holder.querySelector('.prev-btn');
+
+                const nextBtn =
+                    holder.querySelector('.next-btn');
+
+                totalLabel.textContent =
+                    images.length;
+
 
                 function changeSlide(direction) {
-                    images[currentIdx].classList.remove('active');
+
+                    images[currentIdx]
+                        .classList.remove('active');
+
                     if (direction === 'next') {
-                        currentIdx = (currentIdx + 1) % images.length;
+
+                        currentIdx =
+                            (currentIdx + 1) %
+                            images.length;
+
                     } else if (direction === 'prev') {
-                        currentIdx = (currentIdx - 1 + images.length) % images.length;
+
+                        currentIdx =
+                            (currentIdx - 1 +
+                                images.length) %
+                            images.length;
+
                     }
-                    images[currentIdx].classList.add('active');
-                    currentLabel.textContent = currentIdx + 1;
+
+                    images[currentIdx]
+                        .classList.add('active');
+
+                    currentLabel.textContent =
+                        currentIdx + 1;
                 }
 
-                nextBtn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    changeSlide('next');
-                });
-                prevBtn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    changeSlide('prev');
-                });
+
+                nextBtn.addEventListener(
+                    'click',
+                    () => changeSlide('next')
+                );
+
+                prevBtn.addEventListener(
+                    'click',
+                    () => changeSlide('prev')
+                );
+
             }
+
         });
-    </script>
+
+</script>
+
 </body>
 </html>
+```
