@@ -2,11 +2,34 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+
     <link rel="icon" type="image/png" href="favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Solors Store — Скачать игры от Solors</title>
 
     <style>
+
+        /* =========================================================
+           ШРИФТЫ ТЕМ
+           ========================================================= */
+
+        /*
+           Если у тебя есть свои файлы шрифтов, можешь добавить их сюда.
+
+           Например:
+
+           @font-face {
+               font-family: "Minecraft";
+               src: url("themes/minecraft/font.woff2");
+           }
+
+           @font-face {
+               font-family: "Deltarune";
+               src: url("themes/deltarune/font.woff2");
+           }
+        */
+
 
         /* =========================================================
            ОБЩИЕ СТИЛИ
@@ -18,63 +41,89 @@
             padding: 0;
         }
 
-
-        /* =========================================================
-           DEFAULT — ОСНОВНАЯ ТЕМА
-           ========================================================= */
-
         body {
-            background-image: url('background.jpeg');
+            background-image: url("background.jpeg");
             background-color: #000000;
+
             background-position: center center;
             background-repeat: repeat;
             background-size: min(800px, 100%);
             background-attachment: fixed;
 
             color: #ffffff;
+
             font-family: "Courier New", Courier, monospace;
             line-height: 1.6;
+
             padding: 20px;
 
             display: flex;
             justify-content: center;
             align-items: flex-start;
+
             min-height: 100vh;
+
+            transition:
+                background-color 0.3s ease,
+                color 0.3s ease;
         }
+
+
+        /* =========================================================
+           ОСНОВНОЙ КОНТЕЙНЕР
+           ========================================================= */
 
         .main-container {
             background-color: rgba(17, 17, 17, 0.96);
+
             width: 100%;
             max-width: 800px;
+
             border: 3px double #ffffff;
+
             padding: 30px;
+
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
+
             word-wrap: break-word;
         }
 
+
+        /* =========================================================
+           HEADER
+           ========================================================= */
+
         header {
             text-align: center;
+
             border-bottom: 2px dashed #ffffff;
+
             padding-bottom: 20px;
             margin-bottom: 30px;
         }
 
         h1 {
             font-size: 2.5rem;
+
             letter-spacing: 2px;
+
             margin-bottom: 10px;
         }
 
         .store-logo {
             max-width: 100%;
             height: auto;
+
             display: block;
+
             margin: 0 auto;
         }
 
         .subtitle {
             font-size: 0.9rem;
+
             text-transform: uppercase;
+
             color: #888888;
         }
 
@@ -85,49 +134,67 @@
 
         .games-list {
             display: flex;
+
             flex-direction: column;
+
             gap: 30px;
+
             width: 100%;
         }
 
         .game-card {
             border: 1px solid #ffffff;
+
             padding: 25px;
+
             background: #000000;
+
             width: 100%;
             height: auto;
 
             display: flex;
+
             flex-direction: column;
+
             align-items: flex-start;
         }
 
         .game-header {
             display: flex;
+
             align-items: center;
+
             gap: 15px;
 
             border-bottom: 1px dashed #333333;
+
             width: 100%;
+
             padding-bottom: 8px;
             margin-bottom: 12px;
         }
 
         .game-title {
             font-size: 1.4rem;
+
             font-weight: bold;
         }
 
         .game-date {
             font-size: 0.85rem;
+
             font-weight: normal;
+
             color: #777777;
+
             white-space: nowrap;
         }
 
         .versions-header {
             width: 100%;
+
             cursor: pointer;
+
             user-select: none;
         }
 
@@ -137,16 +204,22 @@
 
         .version-arrow {
             margin-left: auto;
+
             color: #888888;
+
             font-size: 0.9rem;
         }
 
         .game-icon {
             width: 32px;
             height: 32px;
+
             object-fit: contain;
+
             display: inline-block;
+
             filter: grayscale(100%);
+
             flex-shrink: 0;
         }
 
@@ -161,40 +234,58 @@
 
         .desc-container {
             font-size: 0.95rem;
+
             color: #cccccc;
+
             margin-bottom: 15px;
+
             width: 100%;
+
             position: relative;
         }
 
         .game-desc {
             display: -webkit-box;
+
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
+
             overflow: hidden;
+
             white-space: normal;
         }
 
         .game-desc.expanded {
             display: block;
+
             overflow: visible;
         }
 
         .more-btn {
             display: inline-block;
+
             background: none;
+
             border: none;
+
             color: #ff0055;
+
             font-family: inherit;
+
             font-size: 1rem;
+
             font-weight: bold;
+
             cursor: pointer;
+
             padding: 2px 5px;
+
             margin-top: 5px;
         }
 
         .more-btn:hover {
             background-color: #ffffff;
+
             color: #000000;
         }
 
@@ -205,15 +296,21 @@
 
         .versions-container {
             width: 100%;
+
             margin-bottom: 20px;
         }
 
         .versions-list {
             display: none;
+
             flex-direction: column;
+
             gap: 8px;
+
             margin-top: 10px;
+
             padding-top: 10px;
+
             border-top: 1px dashed #333333;
         }
 
@@ -223,12 +320,17 @@
 
         .version-item {
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
+
             gap: 15px;
 
             padding: 10px;
+
             border: 1px solid #333333;
+
             background: #050505;
         }
 
@@ -238,27 +340,37 @@
 
         .version-download {
             color: #ffffff;
+
             text-decoration: none;
+
             border: 1px solid #ffffff;
+
             padding: 5px 10px;
+
             font-size: 0.8rem;
+
             white-space: nowrap;
         }
 
         .version-download:hover {
             background: #ffffff;
+
             color: #000000;
         }
 
         .latest-version {
             display: flex;
+
             align-items: center;
+
             gap: 8px;
+
             color: #cccccc;
         }
 
         .latest-label {
             color: #666666;
+
             font-size: 0.8rem;
         }
 
@@ -277,8 +389,11 @@
 
         .screenshots-holder {
             width: 100%;
+
             margin-bottom: 20px;
+
             padding-top: 10px;
+
             position: relative;
         }
 
@@ -288,52 +403,77 @@
 
         .screen-title {
             font-size: 0.8rem;
+
             text-transform: uppercase;
+
             color: #666666;
+
             margin-bottom: 8px;
         }
 
         .slider-wrapper {
             position: relative;
+
             width: 100%;
+
             display: flex;
+
             align-items: center;
         }
 
         .screenshots-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(150px, 1fr));
+
             gap: 10px;
+
             width: 100%;
         }
 
         .screenshots-grid img {
             width: 100%;
             height: auto;
+
             border: 1px solid #333333;
+
             filter: grayscale(100%);
-            transition: filter 0.2s ease;
+
+            transition:
+                filter 0.2s ease,
+                border-color 0.2s ease;
+
             display: block;
         }
 
         .screenshots-grid img:hover {
             filter: grayscale(0%);
+
             border-color: #ffffff;
         }
 
         .slider-active .screenshots-grid {
             display: block;
+
             overflow: hidden;
+
             text-align: center;
+
             background: #111;
+
             border: 1px solid #333333;
         }
 
         .slider-active .screenshots-grid img {
             display: none;
+
             max-height: 400px;
+
             width: auto;
+
             max-width: 100%;
+
             margin: 0 auto;
         }
 
@@ -343,22 +483,35 @@
 
         .slider-btn {
             display: none;
+
             position: absolute;
+
             top: 50%;
+
             transform: translateY(-50%);
+
             background: #000000;
+
             color: #ffffff;
+
             border: 1px solid #ffffff;
+
             font-family: inherit;
+
             padding: 10px 15px;
+
             font-weight: bold;
+
             cursor: pointer;
+
             z-index: 10;
+
             user-select: none;
         }
 
         .slider-btn:hover {
             background: #ffffff;
+
             color: #000000;
         }
 
@@ -376,9 +529,13 @@
 
         .slider-counter {
             display: none;
+
             text-align: center;
+
             font-size: 0.8rem;
+
             color: #888888;
+
             margin-top: 5px;
         }
 
@@ -393,37 +550,60 @@
 
         .download-btn {
             display: inline-block;
+
             background-color: #ffffff;
+
             color: #000000;
+
             padding: 12px 24px;
+
             text-decoration: none;
+
             font-weight: bold;
+
             font-size: 0.9rem;
+
             border: 2px solid #ffffff;
+
             transition: all 0.2s ease;
+
             text-transform: uppercase;
+
             letter-spacing: 1px;
+
             margin-top: auto;
         }
 
         .download-btn:hover {
             background-color: #000000;
+
             color: #ffffff;
+
             cursor: pointer;
         }
 
+
+        /* =========================================================
+           FOOTER
+           ========================================================= */
+
         footer {
             margin-top: 40px;
+
             border-top: 1px solid #333333;
+
             padding-top: 20px;
+
             text-align: center;
+
             font-size: 0.8rem;
+
             color: #666666;
         }
 
 
         /* =========================================================
-           MOBILE — DEFAULT
+           MOBILE
            ========================================================= */
 
         @media (max-width: 600px) {
@@ -458,45 +638,62 @@
 
             .version-item {
                 flex-direction: column;
+
                 align-items: flex-start;
             }
         }
 
 
         /* =========================================================
-           NONE — ТОЛЬКО ТЕКСТ И ГИПЕРССЫЛКИ
+           NONE
+           Только текст и гиперссылки
            ========================================================= */
 
         body.theme-none {
             background: #ffffff;
+
             color: #000000;
+
             font-family: "Times New Roman", Times, serif;
+
             line-height: normal;
+
             padding: 8px;
 
             display: block;
+
             min-height: 100vh;
         }
 
         body.theme-none .main-container {
             background: transparent;
+
             width: auto;
+
             max-width: none;
+
             border: none;
+
             padding: 0;
+
             box-shadow: none;
         }
 
         body.theme-none header {
             text-align: left;
+
             border: none;
+
             padding: 0;
+
             margin: 0 0 20px 0;
         }
 
         body.theme-none header h1 {
             font-size: 2em;
+
             letter-spacing: normal;
+
             margin-bottom: 10px;
         }
 
@@ -510,7 +707,9 @@
 
         body.theme-none .subtitle {
             font-size: 1rem;
+
             text-transform: none;
+
             color: #000000;
         }
 
@@ -520,17 +719,25 @@
 
         body.theme-none .game-card {
             border: none;
+
             padding: 0;
+
             margin-bottom: 30px;
+
             background: transparent;
+
             width: auto;
+
             display: block;
         }
 
         body.theme-none .game-header {
             display: block;
+
             border: none;
+
             padding: 0;
+
             margin: 0 0 10px 0;
         }
 
@@ -540,36 +747,47 @@
 
         body.theme-none .game-title {
             font-size: 1.5rem;
+
             font-weight: bold;
         }
 
         body.theme-none .game-date {
             color: #000000;
+
             white-space: normal;
         }
 
         body.theme-none .desc-container {
             font-size: 1rem;
+
             color: #000000;
+
             margin-bottom: 10px;
         }
 
         body.theme-none .game-desc {
             display: block;
+
             color: #000000;
         }
 
         body.theme-none .more-btn {
             color: #0000ee;
+
             font-family: "Times New Roman", Times, serif;
+
             font-size: 1rem;
+
             font-weight: normal;
+
             padding: 0;
+
             margin: 5px 0 0 0;
         }
 
         body.theme-none .more-btn:hover {
             background: transparent;
+
             color: #551a8b;
         }
 
@@ -583,24 +801,35 @@
 
         body.theme-none .latest-label {
             color: #000000;
+
             font-size: 1rem;
         }
 
         body.theme-none .download-btn {
             background: transparent;
+
             color: #0000ee;
+
             border: none;
+
             padding: 0;
+
             margin: 0;
+
             font-family: "Times New Roman", Times, serif;
+
             font-size: 1rem;
+
             font-weight: normal;
+
             text-transform: none;
+
             letter-spacing: normal;
         }
 
         body.theme-none .download-btn:hover {
             background: transparent;
+
             color: #551a8b;
         }
 
@@ -610,10 +839,15 @@
 
         body.theme-none footer {
             border: none;
+
             color: #000000;
+
             text-align: left;
+
             margin-top: 30px;
+
             padding: 0;
+
             font-size: 1rem;
         }
 
@@ -624,6 +858,264 @@
         body.theme-none a:visited {
             color: #551a8b;
         }
+
+
+        /* =========================================================
+           MINECRAFT
+           ========================================================= */
+
+        body.theme-minecraft {
+            background-color: #3c8f29;
+
+            color: #ffffff;
+
+            font-family:
+                "Minecraft",
+                "Courier New",
+                monospace;
+
+            background-position: center;
+            background-repeat: repeat;
+            background-size: cover;
+        }
+
+        body.theme-minecraft .main-container {
+            background-color: rgba(20, 20, 20, 0.94);
+
+            border: 4px solid #555555;
+
+            box-shadow:
+                0 0 0 3px #222222,
+                0 0 30px rgba(0, 0, 0, 0.9);
+        }
+
+        body.theme-minecraft header {
+            border-bottom: 3px solid #555555;
+        }
+
+        body.theme-minecraft .game-card {
+            background: rgba(20, 20, 20, 0.95);
+
+            border: 3px solid #555555;
+
+            box-shadow:
+                inset 0 0 0 2px #222222;
+        }
+
+        body.theme-minecraft .game-header {
+            border-bottom: 2px solid #555555;
+        }
+
+        body.theme-minecraft .game-title {
+            text-shadow: 2px 2px #000000;
+        }
+
+        body.theme-minecraft .download-btn {
+            background: #55aa33;
+
+            color: #ffffff;
+
+            border: 3px solid #222222;
+
+            box-shadow:
+                inset 0 0 0 2px #77cc55;
+        }
+
+        body.theme-minecraft .download-btn:hover {
+            background: #77cc55;
+
+            color: #ffffff;
+        }
+
+        body.theme-minecraft .more-btn {
+            color: #66cc44;
+        }
+
+        body.theme-minecraft .more-btn:hover {
+            background: #66cc44;
+
+            color: #000000;
+        }
+
+        body.theme-minecraft .screenshots-grid img {
+            border-color: #555555;
+        }
+
+
+        /* =========================================================
+           DELTARUNE
+           ========================================================= */
+
+        body.theme-deltarune {
+            background-color: #050514;
+
+            color: #ffffff;
+
+            font-family:
+                "Deltarune",
+                "Courier New",
+                monospace;
+
+            background-position: center;
+            background-repeat: repeat;
+            background-size: cover;
+        }
+
+        body.theme-deltarune .main-container {
+            background-color: rgba(5, 5, 20, 0.96);
+
+            border: 3px solid #ffffff;
+
+            box-shadow:
+                0 0 20px rgba(80, 80, 255, 0.5),
+                0 0 40px rgba(0, 0, 0, 0.9);
+        }
+
+        body.theme-deltarune header {
+            border-bottom: 2px dashed #ffffff;
+        }
+
+        body.theme-deltarune .game-card {
+            background: #050514;
+
+            border: 2px solid #ffffff;
+
+            box-shadow:
+                0 0 10px rgba(80, 80, 255, 0.25);
+        }
+
+        body.theme-deltarune .game-title {
+            text-shadow:
+                2px 2px #000000,
+                0 0 5px #ffffff;
+        }
+
+        body.theme-deltarune .download-btn {
+            background: #ffffff;
+
+            color: #000000;
+
+            border: 2px solid #ffffff;
+        }
+
+        body.theme-deltarune .download-btn:hover {
+            background: #000000;
+
+            color: #ffffff;
+        }
+
+        body.theme-deltarune .more-btn {
+            color: #ffffff;
+        }
+
+        body.theme-deltarune .more-btn:hover {
+            background: #ffffff;
+
+            color: #000000;
+        }
+
+
+        /* =========================================================
+           CLASSIC
+           ========================================================= */
+
+        body.theme-classic {
+            background-color: #f2ead3;
+
+            color: #1a1a1a;
+
+            font-family:
+                "Times New Roman",
+                Times,
+                serif;
+
+            background-position: center;
+            background-repeat: repeat;
+            background-size: cover;
+        }
+
+        body.theme-classic .main-container {
+            background-color: rgba(255, 250, 235, 0.96);
+
+            border: 2px solid #333333;
+
+            box-shadow:
+                0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        body.theme-classic header {
+            border-bottom: 2px solid #333333;
+        }
+
+        body.theme-classic .subtitle {
+            color: #555555;
+        }
+
+        body.theme-classic .game-card {
+            background: #fffdf5;
+
+            border: 1px solid #333333;
+        }
+
+        body.theme-classic .game-header {
+            border-bottom: 1px solid #999999;
+        }
+
+        body.theme-classic .game-title {
+            font-family:
+                "Times New Roman",
+                Times,
+                serif;
+        }
+
+        body.theme-classic .game-date {
+            color: #666666;
+        }
+
+        body.theme-classic .desc-container {
+            color: #222222;
+        }
+
+        body.theme-classic .more-btn {
+            color: #0000ee;
+
+            font-family:
+                "Times New Roman",
+                Times,
+                serif;
+        }
+
+        body.theme-classic .more-btn:hover {
+            background: #000000;
+
+            color: #ffffff;
+        }
+
+        body.theme-classic .download-btn {
+            background: #333333;
+
+            color: #ffffff;
+
+            border: 2px solid #333333;
+
+            font-family:
+                "Times New Roman",
+                Times,
+                serif;
+        }
+
+        body.theme-classic .download-btn:hover {
+            background: #ffffff;
+
+            color: #000000;
+        }
+
+        body.theme-classic footer {
+            color: #555555;
+
+            border-top-color: #999999;
+        }
+
 
     </style>
 </head>
@@ -637,13 +1129,16 @@
 
         <h1>
             <img
-                src="solorsstoredefault.png"
+                id="store-logo"
+                src="solorsstore_default.png"
                 alt="SOLORS STORE"
                 class="store-logo"
             >
         </h1>
 
-        <p class="subtitle">Игры от Solors.</p>
+        <p class="subtitle">
+            Игры от Solors.
+        </p>
 
     </header>
 
@@ -653,23 +1148,32 @@
         <div class="games-list">
 
 
-            <!-- ================= ИГРА 1 ================= -->
+            <!-- =====================================================
+                 ИГРА 1
+                 ===================================================== -->
 
             <div class="game-card">
 
-                <div class="game-header"
-                     data-has-icon="false"
-                     data-has-versions="false">
+                <div
+                    class="game-header"
+                    data-has-icon="false"
+                    data-has-versions="false"
+                >
 
-                    <img class="game-icon"
-                         src="game1-icon.png"
-                         alt="icon">
+                    <img
+                        class="game-icon"
+                        src="game1-icon.png"
+                        alt="icon"
+                    >
 
                     <div class="game-title">
+
                         Just A Corridor
+
                         <span class="game-date">
                             (28.07.2024) • Прямое скачивание • 16 MB
                         </span>
+
                     </div>
 
                 </div>
@@ -681,8 +1185,10 @@
                         Просто коридор...
                     </p>
 
-                    <button class="more-btn"
-                            onclick="toggleDesc(this)">
+                    <button
+                        class="more-btn"
+                        onclick="toggleDesc(this)"
+                    >
                         [...]
                     </button>
 
@@ -692,21 +1198,32 @@
                 <div class="versions-container">
 
                     <div class="latest-version">
-                        <span class="latest-label">Версия:</span>
-                        <span>v1.0</span>
+
+                        <span class="latest-label">
+                            Версия:
+                        </span>
+
+                        <span>
+                            v1.0
+                        </span>
+
                     </div>
 
                 </div>
 
 
-                <a href="just-a-corridor-v1.0.zip"
-                   class="download-btn">
+                <a
+                    href="just-a-corridor-v1.0.zip"
+                    class="download-btn"
+                >
                     Скачать .ZIP
                 </a>
 
 
-                <div class="screenshots-holder"
-                     data-has-screen="true">
+                <div
+                    class="screenshots-holder"
+                    data-has-screen="true"
+                >
 
                     <div class="screen-title">
                         Скриншоты:
@@ -720,8 +1237,10 @@
 
                         <div class="screenshots-grid">
 
-                            <img src="justacorridorscreenshot1.png"
-                                 alt="Screen 1">
+                            <img
+                                src="justacorridorscreenshot1.png"
+                                alt="Screen 1"
+                            >
 
                         </div>
 
@@ -734,7 +1253,7 @@
                     <div class="slider-counter">
                         Кадр:
                         <span class="current-idx">1</span>/
-                        <span class="total-idx">3</span>
+                        <span class="total-idx">1</span>
                     </div>
 
                 </div>
@@ -742,23 +1261,32 @@
             </div>
 
 
-            <!-- ================= ИГРА 2 ================= -->
+            <!-- =====================================================
+                 ИГРА 2
+                 ===================================================== -->
 
             <div class="game-card">
 
-                <div class="game-header"
-                     data-has-icon="false"
-                     data-has-versions="false">
+                <div
+                    class="game-header"
+                    data-has-icon="false"
+                    data-has-versions="false"
+                >
 
-                    <img class="game-icon"
-                         src="game2-icon.png"
-                         alt="icon">
+                    <img
+                        class="game-icon"
+                        src="game2-icon.png"
+                        alt="icon"
+                    >
 
                     <div class="game-title">
+
                         Король Гномстопии 2
+
                         <span class="game-date">
                             (16.02.2025) • Прямое скачивание • 13 MB
                         </span>
+
                     </div>
 
                 </div>
@@ -778,8 +1306,10 @@
                         выйдет ремастер.
                     </p>
 
-                    <button class="more-btn"
-                            onclick="toggleDesc(this)">
+                    <button
+                        class="more-btn"
+                        onclick="toggleDesc(this)"
+                    >
                         [...]
                     </button>
 
@@ -789,15 +1319,24 @@
                 <div class="versions-container">
 
                     <div class="latest-version">
-                        <span class="latest-label">Версия:</span>
-                        <span>v1.0</span>
+
+                        <span class="latest-label">
+                            Версия:
+                        </span>
+
+                        <span>
+                            v1.0
+                        </span>
+
                     </div>
 
                 </div>
 
 
-                <div class="screenshots-holder"
-                     data-has-screen="true">
+                <div
+                    class="screenshots-holder"
+                    data-has-screen="true"
+                >
 
                     <div class="screen-title">
                         Скриншоты:
@@ -811,14 +1350,20 @@
 
                         <div class="screenshots-grid">
 
-                            <img src="korolgnomstopii21.png"
-                                 alt="Screen 1">
+                            <img
+                                src="korolgnomstopii21.png"
+                                alt="Screen 1"
+                            >
 
-                            <img src="korolgnomstopii22.png"
-                                 alt="Screen 2">
+                            <img
+                                src="korolgnomstopii22.png"
+                                alt="Screen 2"
+                            >
 
-                            <img src="korolgnomstopii23.png"
-                                 alt="Screen 3">
+                            <img
+                                src="korolgnomstopii23.png"
+                                alt="Screen 3"
+                            >
 
                         </div>
 
@@ -837,31 +1382,42 @@
                 </div>
 
 
-                <a href="korol-gnomstopii-2-v1.0.zip"
-                   class="download-btn">
+                <a
+                    href="korol-gnomstopii-2-v1.0.zip"
+                    class="download-btn"
+                >
                     Скачать .ZIP
                 </a>
 
             </div>
 
 
-            <!-- ================= ИГРА 3 ================= -->
+            <!-- =====================================================
+                 ИГРА 3
+                 ===================================================== -->
 
             <div class="game-card">
 
-                <div class="game-header"
-                     data-has-icon="false"
-                     data-has-versions="false">
+                <div
+                    class="game-header"
+                    data-has-icon="false"
+                    data-has-versions="false"
+                >
 
-                    <img class="game-icon"
-                         src="game3-icon.png"
-                         alt="icon">
+                    <img
+                        class="game-icon"
+                        src="game3-icon.png"
+                        alt="icon"
+                    >
 
                     <div class="game-title">
+
                         Noise Avoider
+
                         <span class="game-date">
                             (19.08.2026) • Dropbox • 343 MB
                         </span>
+
                     </div>
 
                 </div>
@@ -877,8 +1433,10 @@
                         "люди" шутят чернушные шутки и выдают постироничный юмор.
                     </p>
 
-                    <button class="more-btn"
-                            onclick="toggleDesc(this)">
+                    <button
+                        class="more-btn"
+                        onclick="toggleDesc(this)"
+                    >
                         [...]
                     </button>
 
@@ -888,15 +1446,24 @@
                 <div class="versions-container">
 
                     <div class="latest-version">
-                        <span class="latest-label">Версия:</span>
-                        <span>v1.3</span>
+
+                        <span class="latest-label">
+                            Версия:
+                        </span>
+
+                        <span>
+                            v1.3
+                        </span>
+
                     </div>
 
                 </div>
 
 
-                <div class="screenshots-holder"
-                     data-has-screen="true">
+                <div
+                    class="screenshots-holder"
+                    data-has-screen="true"
+                >
 
                     <div class="screen-title">
                         Скриншоты:
@@ -910,20 +1477,30 @@
 
                         <div class="screenshots-grid">
 
-                            <img src="Noise Avoider Gameplay (1).jpg"
-                                 alt="Screen 1">
+                            <img
+                                src="Noise Avoider Gameplay (1).jpg"
+                                alt="Screen 1"
+                            >
 
-                            <img src="Noise Avoider Gameplay (2).jpg"
-                                 alt="Screen 2">
+                            <img
+                                src="Noise Avoider Gameplay (2).jpg"
+                                alt="Screen 2"
+                            >
 
-                            <img src="Noise Avoider Gameplay (3).jpg"
-                                 alt="Screen 3">
+                            <img
+                                src="Noise Avoider Gameplay (3).jpg"
+                                alt="Screen 3"
+                            >
 
-                            <img src="Noise Avoider Gameplay (4).jpg"
-                                 alt="Screen 4">
+                            <img
+                                src="Noise Avoider Gameplay (4).jpg"
+                                alt="Screen 4"
+                            >
 
-                            <img src="Noise Avoider Gameplay (5).jpg"
-                                 alt="Screen 5">
+                            <img
+                                src="Noise Avoider Gameplay (5).jpg"
+                                alt="Screen 5"
+                            >
 
                         </div>
 
@@ -942,8 +1519,10 @@
                 </div>
 
 
-                <a href="https://www.dropbox.com/scl/fi/ij6m6mffn79ptopx1ln1g/noise-avoider-ru-ver..zip?rlkey=zs7hi3qed6ysyupmklrtl0581&st=h4c7xdpj&dl=0"
-                   class="download-btn">
+                <a
+                    href="https://www.dropbox.com/scl/fi/ij6m6mffn79ptopx1ln1g/noise-avoider-ru-ver..zip?rlkey=zs7hi3qed6ysyupmklrtl0581&st=h4c7xdpj&dl=0"
+                    class="download-btn"
+                >
                     Скачать .ZIP
                 </a>
 
@@ -956,7 +1535,11 @@
 
 
     <footer>
-        <p>&copy; 2026 SOLORS. Все права защищены.</p>
+
+        <p>
+            &copy; 2026 SOLORS. Все права защищены.
+        </p>
+
     </footer>
 
 </div>
@@ -966,20 +1549,164 @@
 
 
     /* =========================================================
-       ТЕМА САЙТА
+       НАСТРОЙКИ ТЕМ
+       =========================================================
 
-       default = обычная тема
-       none    = только текст и гиперссылки
-       ========================================================= */
+       Доступные темы:
+
+       default
+       none
+       minecraft
+       deltarune
+       classic
+
+       Чтобы поменять тему, измени только:
+
+       const SITE_THEME = "default";
+
+       Например:
+
+       const SITE_THEME = "minecraft";
+    */
+
 
     const SITE_THEME = "default";
+
+
+    /* =========================================================
+       КОНФИГУРАЦИЯ ТЕМ
+       ========================================================= */
+
+    const themes = {
+
+        default: {
+
+            background: "background.jpeg",
+
+            logo: "solorsstore_default.png",
+
+            font:
+                '"Courier New", Courier, monospace'
+
+        },
+
+
+        minecraft: {
+
+            background:
+                "themes/minecraft/background.png",
+
+            logo:
+                "themes/minecraft/solorsstore_minecraft.png",
+
+            font:
+                '"Minecraft", "Courier New", monospace'
+
+        },
+
+
+        deltarune: {
+
+            background:
+                "themes/deltarune/background.png",
+
+            logo:
+                "themes/deltarune/solorsstore_deltarune.png",
+
+            font:
+                '"Deltarune", "Courier New", monospace'
+
+        },
+
+
+        classic: {
+
+            background:
+                "themes/classic/background.png",
+
+            logo:
+                "themes/classic/solorsstore_classic.png",
+
+            font:
+                '"Times New Roman", Times, serif'
+
+        },
+
+
+        none: {
+
+            background: null,
+
+            logo: null,
+
+            font:
+                '"Times New Roman", Times, serif'
+
+        }
+
+    };
+
+
+    /* =========================================================
+       ПРОВЕРКА ТЕМЫ
+       ========================================================= */
+
+    if (!themes[SITE_THEME]) {
+
+        console.warn(
+            "Такой темы нет: " + SITE_THEME
+        );
+
+    }
 
 
     /* =========================================================
        ПРИМЕНЕНИЕ ТЕМЫ
        ========================================================= */
 
-    document.body.classList.add("theme-" + SITE_THEME);
+    const currentTheme =
+        themes[SITE_THEME] || themes.default;
+
+
+    document.body.classList.add(
+        "theme-" + SITE_THEME
+    );
+
+
+    /* =========================================================
+       ФОН
+       ========================================================= */
+
+    if (currentTheme.background) {
+
+        document.body.style.backgroundImage =
+            `url("${currentTheme.background}")`;
+
+    }
+
+
+    /* =========================================================
+       ШРИФТ
+       ========================================================= */
+
+    document.body.style.fontFamily =
+        currentTheme.font;
+
+
+    /* =========================================================
+       ЛОГОТИП
+       ========================================================= */
+
+    const storeLogo =
+        document.getElementById("store-logo");
+
+
+    if (currentTheme.logo && storeLogo) {
+
+        storeLogo.src =
+            currentTheme.logo;
+
+    }
 
 
     /* =========================================================
@@ -988,21 +1715,26 @@
 
     function toggleDesc(btn) {
 
-        const desc = btn.previousElementSibling;
+        const desc =
+            btn.previousElementSibling;
 
-        if (desc.classList.contains('expanded')) {
 
-            desc.classList.remove('expanded');
+        if (desc.classList.contains("expanded")) {
 
-            btn.textContent = '[...]';
+            desc.classList.remove("expanded");
+
+            btn.textContent =
+                "[...]";
 
         } else {
 
-            desc.classList.add('expanded');
+            desc.classList.add("expanded");
 
-            btn.textContent = '[свернуть]';
+            btn.textContent =
+                "[свернуть]";
 
         }
+
     }
 
 
@@ -1012,37 +1744,57 @@
 
     function toggleVersions(header) {
 
-        const card = header.closest('.game-card');
+        const card =
+            header.closest(".game-card");
+
 
         const versions =
-            card.querySelector('.versions-container');
+            card.querySelector(
+                ".versions-container"
+            );
+
 
         if (
             !versions ||
-            header.dataset.hasVersions !== 'true'
+            header.dataset.hasVersions !== "true"
         ) {
+
             return;
+
         }
 
-        versions.classList.toggle('expanded');
+
+        versions.classList.toggle(
+            "expanded"
+        );
+
 
         const arrow =
-            header.querySelector('.version-arrow');
+            header.querySelector(
+                ".version-arrow"
+            );
+
 
         if (arrow) {
 
             if (
-                versions.classList.contains('expanded')
+                versions.classList.contains(
+                    "expanded"
+                )
             ) {
 
-                arrow.textContent = '▲';
+                arrow.textContent =
+                    "▲";
 
             } else {
 
-                arrow.textContent = '▼';
+                arrow.textContent =
+                    "▼";
 
             }
+
         }
+
     }
 
 
@@ -1050,67 +1802,109 @@
        АВТОМАТИЧЕСКОЕ СКРЫТИЕ [...]
        ========================================================= */
 
-    document.querySelectorAll('.game-card').forEach(card => {
+    document
+        .querySelectorAll(".game-card")
+        .forEach(card => {
 
-        const desc =
-            card.querySelector('.game-desc');
+            const desc =
+                card.querySelector(
+                    ".game-desc"
+                );
 
-        const btn =
-            card.querySelector('.more-btn');
 
-        if (!desc || !btn) {
-            return;
-        }
+            const btn =
+                card.querySelector(
+                    ".more-btn"
+                );
 
-        if (
-            desc.scrollHeight <=
-            desc.clientHeight
-        ) {
-            btn.style.display = 'none';
-        }
 
-    });
+            if (!desc || !btn) {
+
+                return;
+
+            }
+
+
+            if (
+                desc.scrollHeight <=
+                desc.clientHeight
+            ) {
+
+                btn.style.display =
+                    "none";
+
+            }
+
+        });
 
 
     /* =========================================================
        СЛАЙДЕРЫ
        ========================================================= */
 
-    document.querySelectorAll('.screenshots-holder')
+    document
+        .querySelectorAll(".screenshots-holder")
         .forEach(holder => {
 
+
             if (
-                holder.getAttribute('data-has-screen') === 'false'
+                holder.getAttribute(
+                    "data-has-screen"
+                ) === "false"
             ) {
+
                 return;
+
             }
+
 
             const images =
                 holder.querySelectorAll(
-                    '.screenshots-grid img'
+                    ".screenshots-grid img"
                 );
+
+
+            /*
+               Если изображений больше двух,
+               включаем режим слайдера.
+            */
 
             if (images.length > 2) {
 
-                holder.classList.add('slider-active');
+                holder.classList.add(
+                    "slider-active"
+                );
+
 
                 let currentIdx = 0;
 
+
                 images[currentIdx]
-                    .classList.add('active');
+                    .classList.add("active");
 
 
                 const currentLabel =
-                    holder.querySelector('.current-idx');
+                    holder.querySelector(
+                        ".current-idx"
+                    );
+
 
                 const totalLabel =
-                    holder.querySelector('.total-idx');
+                    holder.querySelector(
+                        ".total-idx"
+                    );
+
 
                 const prevBtn =
-                    holder.querySelector('.prev-btn');
+                    holder.querySelector(
+                        ".prev-btn"
+                    );
+
 
                 const nextBtn =
-                    holder.querySelector('.next-btn');
+                    holder.querySelector(
+                        ".next-btn"
+                    );
 
 
                 totalLabel.textContent =
@@ -1119,49 +1913,68 @@
 
                 function changeSlide(direction) {
 
+
                     images[currentIdx]
-                        .classList.remove('active');
+                        .classList.remove(
+                            "active"
+                        );
 
 
-                    if (direction === 'next') {
+                    if (direction === "next") {
 
                         currentIdx =
-                            (currentIdx + 1) %
+                            (
+                                currentIdx + 1
+                            ) %
                             images.length;
 
-                    } else if (direction === 'prev') {
+                    }
+
+
+                    else if (
+                        direction === "prev"
+                    ) {
 
                         currentIdx =
-                            (currentIdx - 1 +
-                            images.length) %
+                            (
+                                currentIdx -
+                                1 +
+                                images.length
+                            ) %
                             images.length;
 
                     }
 
 
                     images[currentIdx]
-                        .classList.add('active');
+                        .classList.add(
+                            "active"
+                        );
 
 
                     currentLabel.textContent =
                         currentIdx + 1;
+
                 }
 
 
                 nextBtn.addEventListener(
-                    'click',
-                    () => changeSlide('next')
+                    "click",
+                    () =>
+                        changeSlide("next")
                 );
 
 
                 prevBtn.addEventListener(
-                    'click',
-                    () => changeSlide('prev')
+                    "click",
+                    () =>
+                        changeSlide("prev")
                 );
 
             }
 
         });
+
 
 </script>
 
