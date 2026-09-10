@@ -7,12 +7,21 @@
     <title>Solors Store — Скачать игры от Solors</title>
 
     <style>
-        /* Базовые настройки */
+
+        /* =========================================================
+           ОБЩИЕ СТИЛИ
+           ========================================================= */
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
+
+
+        /* =========================================================
+           DEFAULT — ОСНОВНАЯ ТЕМА
+           ========================================================= */
 
         body {
             background-image: url('background.jpeg');
@@ -56,11 +65,23 @@
             margin-bottom: 10px;
         }
 
+        .store-logo {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
         .subtitle {
             font-size: 0.9rem;
             text-transform: uppercase;
             color: #888888;
         }
+
+
+        /* =========================================================
+           ИГРЫ
+           ========================================================= */
 
         .games-list {
             display: flex;
@@ -81,7 +102,6 @@
             align-items: flex-start;
         }
 
-        /* Заголовок игры */
         .game-header {
             display: flex;
             align-items: center;
@@ -105,7 +125,6 @@
             white-space: nowrap;
         }
 
-        /* Заголовок версии */
         .versions-header {
             width: 100%;
             cursor: pointer;
@@ -122,7 +141,6 @@
             font-size: 0.9rem;
         }
 
-        /* Стили для иконки игры */
         .game-icon {
             width: 32px;
             height: 32px;
@@ -136,7 +154,11 @@
             display: none !important;
         }
 
-        /* Контейнер описания */
+
+        /* =========================================================
+           ОПИСАНИЕ
+           ========================================================= */
+
         .desc-container {
             font-size: 0.95rem;
             color: #cccccc;
@@ -176,7 +198,11 @@
             color: #000000;
         }
 
-        /* Блок версий */
+
+        /* =========================================================
+           ВЕРСИИ
+           ========================================================= */
+
         .versions-container {
             width: 100%;
             margin-bottom: 20px;
@@ -224,7 +250,6 @@
             color: #000000;
         }
 
-        /* Последняя версия */
         .latest-version {
             display: flex;
             align-items: center;
@@ -237,7 +262,6 @@
             font-size: 0.8rem;
         }
 
-        /* Когда версия является выпадающим списком */
         .versions-container.has-multiple .latest-version {
             cursor: pointer;
         }
@@ -246,7 +270,11 @@
             color: #ff0055;
         }
 
-        /* Блок скриншотов */
+
+        /* =========================================================
+           СКРИНШОТЫ
+           ========================================================= */
+
         .screenshots-holder {
             width: 100%;
             margin-bottom: 20px;
@@ -358,7 +386,11 @@
             display: block;
         }
 
-        /* Кнопки скачивания */
+
+        /* =========================================================
+           КНОПКИ
+           ========================================================= */
+
         .download-btn {
             display: inline-block;
             background-color: #ffffff;
@@ -389,7 +421,13 @@
             color: #666666;
         }
 
+
+        /* =========================================================
+           MOBILE — DEFAULT
+           ========================================================= */
+
         @media (max-width: 600px) {
+
             body {
                 padding: 10px;
             }
@@ -423,37 +461,201 @@
                 align-items: flex-start;
             }
         }
+
+
+        /* =========================================================
+           NONE — ТОЛЬКО ТЕКСТ И ГИПЕРССЫЛКИ
+           ========================================================= */
+
+        body.theme-none {
+            background: #ffffff;
+            color: #000000;
+            font-family: "Times New Roman", Times, serif;
+            line-height: normal;
+            padding: 8px;
+
+            display: block;
+            min-height: 100vh;
+        }
+
+        body.theme-none .main-container {
+            background: transparent;
+            width: auto;
+            max-width: none;
+            border: none;
+            padding: 0;
+            box-shadow: none;
+        }
+
+        body.theme-none header {
+            text-align: left;
+            border: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+        }
+
+        body.theme-none header h1 {
+            font-size: 2em;
+            letter-spacing: normal;
+            margin-bottom: 10px;
+        }
+
+        body.theme-none .store-logo {
+            display: none;
+        }
+
+        body.theme-none header h1::after {
+            content: "SOLORS STORE";
+        }
+
+        body.theme-none .subtitle {
+            font-size: 1rem;
+            text-transform: none;
+            color: #000000;
+        }
+
+        body.theme-none .games-list {
+            display: block;
+        }
+
+        body.theme-none .game-card {
+            border: none;
+            padding: 0;
+            margin-bottom: 30px;
+            background: transparent;
+            width: auto;
+            display: block;
+        }
+
+        body.theme-none .game-header {
+            display: block;
+            border: none;
+            padding: 0;
+            margin: 0 0 10px 0;
+        }
+
+        body.theme-none .game-icon {
+            display: none !important;
+        }
+
+        body.theme-none .game-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        body.theme-none .game-date {
+            color: #000000;
+            white-space: normal;
+        }
+
+        body.theme-none .desc-container {
+            font-size: 1rem;
+            color: #000000;
+            margin-bottom: 10px;
+        }
+
+        body.theme-none .game-desc {
+            display: block;
+            color: #000000;
+        }
+
+        body.theme-none .more-btn {
+            color: #0000ee;
+            font-family: "Times New Roman", Times, serif;
+            font-size: 1rem;
+            font-weight: normal;
+            padding: 0;
+            margin: 5px 0 0 0;
+        }
+
+        body.theme-none .more-btn:hover {
+            background: transparent;
+            color: #551a8b;
+        }
+
+        body.theme-none .versions-container {
+            margin-bottom: 10px;
+        }
+
+        body.theme-none .latest-version {
+            color: #000000;
+        }
+
+        body.theme-none .latest-label {
+            color: #000000;
+            font-size: 1rem;
+        }
+
+        body.theme-none .download-btn {
+            background: transparent;
+            color: #0000ee;
+            border: none;
+            padding: 0;
+            margin: 0;
+            font-family: "Times New Roman", Times, serif;
+            font-size: 1rem;
+            font-weight: normal;
+            text-transform: none;
+            letter-spacing: normal;
+        }
+
+        body.theme-none .download-btn:hover {
+            background: transparent;
+            color: #551a8b;
+        }
+
+        body.theme-none .screenshots-holder {
+            display: none !important;
+        }
+
+        body.theme-none footer {
+            border: none;
+            color: #000000;
+            text-align: left;
+            margin-top: 30px;
+            padding: 0;
+            font-size: 1rem;
+        }
+
+        body.theme-none a {
+            color: #0000ee;
+        }
+
+        body.theme-none a:visited {
+            color: #551a8b;
+        }
+
     </style>
 </head>
+
 
 <body>
 
 <div class="main-container">
 
     <header>
-        <h1>SOLORS STORE</h1>
+
+        <h1>
+            <img
+                src="solorsstoredefault.png"
+                alt="SOLORS STORE"
+                class="store-logo"
+            >
+        </h1>
+
         <p class="subtitle">Игры от Solors.</p>
+
     </header>
 
+
     <main>
+
         <div class="games-list">
 
+
             <!-- ================= ИГРА 1 ================= -->
+
             <div class="game-card">
-
-                <!--
-                    НАСТРОЙКИ ИГРЫ:
-
-                    hasVersions:
-                    true  = у игры несколько версий
-                    false = обычная игра с одной версией
-
-                    latestVersion:
-                    версия, которая показывается в свёрнутом состоянии
-
-                    versions:
-                    список всех существующих версий
-                -->
 
                 <div class="game-header"
                      data-has-icon="false"
@@ -465,12 +667,16 @@
 
                     <div class="game-title">
                         Just A Corridor
-                        <span class="game-date">(28.07.2024) • Прямое скачивание • 16 MB</span>
+                        <span class="game-date">
+                            (28.07.2024) • Прямое скачивание • 16 MB
+                        </span>
                     </div>
 
                 </div>
 
+
                 <div class="desc-container">
+
                     <p class="game-desc">
                         Просто коридор...
                     </p>
@@ -479,27 +685,26 @@
                             onclick="toggleDesc(this)">
                         [...]
                     </button>
+
                 </div>
 
-                <!-- ВЕРСИИ ИГРЫ -->
+
                 <div class="versions-container">
 
-                    <!-- Последняя версия -->
                     <div class="latest-version">
                         <span class="latest-label">Версия:</span>
                         <span>v1.0</span>
                     </div>
 
-                    <!-- Все версии -->
-                    
                 </div>
+
 
                 <a href="just-a-corridor-v1.0.zip"
                    class="download-btn">
                     Скачать .ZIP
                 </a>
 
-                <!-- Скриншоты -->
+
                 <div class="screenshots-holder"
                      data-has-screen="true">
 
@@ -538,6 +743,7 @@
 
 
             <!-- ================= ИГРА 2 ================= -->
+
             <div class="game-card">
 
                 <div class="game-header"
@@ -550,15 +756,26 @@
 
                     <div class="game-title">
                         Король Гномстопии 2
-                        <span class="game-date">(16.02.2025) • Прямое скачивание • 13 MB</span>
+                        <span class="game-date">
+                            (16.02.2025) • Прямое скачивание • 13 MB
+                        </span>
                     </div>
 
                 </div>
 
+
                 <div class="desc-container">
 
                     <p class="game-desc">
-                        Korol Gnomstopii 2 - это увлекательный и сложный платформер, в котором вы играете за гнома и должны проходить уровни. Проходить уровни будет непросто, ведь коварные рыцари расставили ловушки в виде шипов или лазеров, а их босс не так прост, как кажется на первый взгляд. В игре есть рейтинговая система и если вы хотите получить самый высокий ранг, то вам придется постараться не получить урон ни разу за игру. Скоро выйдет ремастер.
+                        Korol Gnomstopii 2 - это увлекательный и сложный
+                        платформер, в котором вы играете за гнома и должны
+                        проходить уровни. Проходить уровни будет непросто,
+                        ведь коварные рыцари расставили ловушки в виде шипов
+                        или лазеров, а их босс не так прост, как кажется на
+                        первый взгляд. В игре есть рейтинговая система и если
+                        вы хотите получить самый высокий ранг, то вам придется
+                        постараться не получить урон ни разу за игру. Скоро
+                        выйдет ремастер.
                     </p>
 
                     <button class="more-btn"
@@ -567,6 +784,7 @@
                     </button>
 
                 </div>
+
 
                 <div class="versions-container">
 
@@ -577,7 +795,7 @@
 
                 </div>
 
-                <!-- Скриншоты -->
+
                 <div class="screenshots-holder"
                      data-has-screen="true">
 
@@ -618,6 +836,7 @@
 
                 </div>
 
+
                 <a href="korol-gnomstopii-2-v1.0.zip"
                    class="download-btn">
                     Скачать .ZIP
@@ -627,6 +846,7 @@
 
 
             <!-- ================= ИГРА 3 ================= -->
+
             <div class="game-card">
 
                 <div class="game-header"
@@ -639,15 +859,22 @@
 
                     <div class="game-title">
                         Noise Avoider
-                        <span class="game-date">(19.08.2026) • Dropbox • 343 MB</span>
+                        <span class="game-date">
+                            (19.08.2026) • Dropbox • 343 MB
+                        </span>
                     </div>
 
                 </div>
 
+
                 <div class="desc-container">
 
                     <p class="game-desc">
-                        Noise Avoider — это тестовая игра, созданная чисто ради прикола, просто потому что мне так захотелось. По сути, это двухмерная версия роблокс-обби 2015-х, со своим чатом, уровнями и всем остальным. В чате "люди" шутят чернушные шутки и выдают постироничный юмор.
+                        Noise Avoider — это тестовая игра, созданная чисто
+                        ради прикола, просто потому что мне так захотелось.
+                        По сути, это двухмерная версия роблокс-обби 2015-х,
+                        со своим чатом, уровнями и всем остальным. В чате
+                        "люди" шутят чернушные шутки и выдают постироничный юмор.
                     </p>
 
                     <button class="more-btn"
@@ -656,6 +883,7 @@
                     </button>
 
                 </div>
+
 
                 <div class="versions-container">
 
@@ -666,7 +894,7 @@
 
                 </div>
 
-                <!-- Скриншоты включены -->
+
                 <div class="screenshots-holder"
                      data-has-screen="true">
 
@@ -684,16 +912,16 @@
 
                             <img src="Noise Avoider Gameplay (1).jpg"
                                  alt="Screen 1">
-                                
+
                             <img src="Noise Avoider Gameplay (2).jpg"
                                  alt="Screen 2">
-                            
+
                             <img src="Noise Avoider Gameplay (3).jpg"
                                  alt="Screen 3">
-                            
+
                             <img src="Noise Avoider Gameplay (4).jpg"
                                  alt="Screen 4">
-                            
+
                             <img src="Noise Avoider Gameplay (5).jpg"
                                  alt="Screen 5">
 
@@ -713,6 +941,7 @@
 
                 </div>
 
+
                 <a href="https://www.dropbox.com/scl/fi/ij6m6mffn79ptopx1ln1g/noise-avoider-ru-ver..zip?rlkey=zs7hi3qed6ysyupmklrtl0581&st=h4c7xdpj&dl=0"
                    class="download-btn">
                     Скачать .ZIP
@@ -720,8 +949,11 @@
 
             </div>
 
+
         </div>
+
     </main>
+
 
     <footer>
         <p>&copy; 2026 SOLORS. Все права защищены.</p>
@@ -731,6 +963,24 @@
 
 
 <script>
+
+
+    /* =========================================================
+       ТЕМА САЙТА
+
+       default = обычная тема
+       none    = только текст и гиперссылки
+       ========================================================= */
+
+    const SITE_THEME = "default";
+
+
+    /* =========================================================
+       ПРИМЕНЕНИЕ ТЕМЫ
+       ========================================================= */
+
+    document.body.classList.add("theme-" + SITE_THEME);
+
 
     /* =========================================================
        ОПИСАНИЕ ИГРЫ
@@ -743,11 +993,13 @@
         if (desc.classList.contains('expanded')) {
 
             desc.classList.remove('expanded');
+
             btn.textContent = '[...]';
 
         } else {
 
             desc.classList.add('expanded');
+
             btn.textContent = '[свернуть]';
 
         }
@@ -761,25 +1013,35 @@
     function toggleVersions(header) {
 
         const card = header.closest('.game-card');
-        const versions = card.querySelector('.versions-container');
 
-        if (!versions ||
-            header.dataset.hasVersions !== 'true') {
+        const versions =
+            card.querySelector('.versions-container');
+
+        if (
+            !versions ||
+            header.dataset.hasVersions !== 'true'
+        ) {
             return;
         }
 
         versions.classList.toggle('expanded');
 
-        const arrow = header.querySelector('.version-arrow');
+        const arrow =
+            header.querySelector('.version-arrow');
 
         if (arrow) {
 
-            if (versions.classList.contains('expanded')) {
-                arrow.textContent = '▲';
-            } else {
-                arrow.textContent = '▼';
-            }
+            if (
+                versions.classList.contains('expanded')
+            ) {
 
+                arrow.textContent = '▲';
+
+            } else {
+
+                arrow.textContent = '▼';
+
+            }
         }
     }
 
@@ -790,14 +1052,20 @@
 
     document.querySelectorAll('.game-card').forEach(card => {
 
-        const desc = card.querySelector('.game-desc');
-        const btn = card.querySelector('.more-btn');
+        const desc =
+            card.querySelector('.game-desc');
+
+        const btn =
+            card.querySelector('.more-btn');
 
         if (!desc || !btn) {
             return;
         }
 
-        if (desc.scrollHeight <= desc.clientHeight) {
+        if (
+            desc.scrollHeight <=
+            desc.clientHeight
+        ) {
             btn.style.display = 'none';
         }
 
@@ -818,7 +1086,9 @@
             }
 
             const images =
-                holder.querySelectorAll('.screenshots-grid img');
+                holder.querySelectorAll(
+                    '.screenshots-grid img'
+                );
 
             if (images.length > 2) {
 
@@ -828,6 +1098,7 @@
 
                 images[currentIdx]
                     .classList.add('active');
+
 
                 const currentLabel =
                     holder.querySelector('.current-idx');
@@ -841,6 +1112,7 @@
                 const nextBtn =
                     holder.querySelector('.next-btn');
 
+
                 totalLabel.textContent =
                     images.length;
 
@@ -849,6 +1121,7 @@
 
                     images[currentIdx]
                         .classList.remove('active');
+
 
                     if (direction === 'next') {
 
@@ -860,13 +1133,15 @@
 
                         currentIdx =
                             (currentIdx - 1 +
-                                images.length) %
+                            images.length) %
                             images.length;
 
                     }
 
+
                     images[currentIdx]
                         .classList.add('active');
+
 
                     currentLabel.textContent =
                         currentIdx + 1;
@@ -878,6 +1153,7 @@
                     () => changeSlide('next')
                 );
 
+
                 prevBtn.addEventListener(
                     'click',
                     () => changeSlide('prev')
@@ -888,6 +1164,7 @@
         });
 
 </script>
+
 
 </body>
 </html>
