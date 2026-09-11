@@ -181,12 +181,42 @@
         }
 
         .store-logo {
+            width: var(--store-logo-width, auto);
+            height: var(--store-logo-height, auto);
             max-width: 100%;
-            height: auto;
 
             display: block;
 
             margin: 0 auto;
+            object-fit: contain;
+        }
+
+        /* =========================================================
+           РАЗМЕР ЛОГОТИПОВ SOLORS STORE
+           Меняй width/height здесь, чтобы отдельно настроить
+           solorsstore_default.png, solorsstore_minecraft.png,
+           solorsstore_deltarune.png и solorsstore_classic.png.
+           auto = сохранить пропорции.
+           ========================================================= */
+
+        body.theme-default {
+            --store-logo-width: 300px;
+            --store-logo-height: auto;
+        }
+
+        body.theme-minecraft {
+            --store-logo-width: 300px;
+            --store-logo-height: auto;
+        }
+
+        body.theme-deltarune {
+            --store-logo-width: 300px;
+            --store-logo-height: auto;
+        }
+
+        body.theme-classic {
+            --store-logo-width: 300px;
+            --store-logo-height: auto;
         }
 
         .subtitle {
@@ -2258,4 +2288,4 @@
 
 
 </body>
-</html>
+                    </html>
