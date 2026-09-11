@@ -32,6 +32,76 @@
 
 
         /* =========================================================
+           ЕДИНАЯ СИСТЕМА ОФОРМЛЕНИЯ ТЕМ
+           ========================================================= */
+
+        :root {
+            --theme-accent: #ff0055;
+            --theme-border: #ffffff;
+            --theme-card-bg: #000000;
+            --theme-main-bg: rgba(17, 17, 17, 0.96);
+            --theme-text: #ffffff;
+            --theme-muted: #888888;
+            --theme-button-bg: #ffffff;
+            --theme-button-text: #000000;
+        }
+
+        body.theme-default {
+            --theme-accent: #ff0055;
+            --theme-border: #ffffff;
+            --theme-card-bg: #000000;
+            --theme-main-bg: rgba(17, 17, 17, 0.96);
+            --theme-text: #ffffff;
+            --theme-muted: #888888;
+            --theme-button-bg: #ffffff;
+            --theme-button-text: #000000;
+        }
+
+        body.theme-none {
+            --theme-accent: #0000ee;
+            --theme-border: transparent;
+            --theme-card-bg: transparent;
+            --theme-main-bg: transparent;
+            --theme-text: #000000;
+            --theme-muted: #000000;
+            --theme-button-bg: transparent;
+            --theme-button-text: #0000ee;
+        }
+
+        body.theme-minecraft {
+            --theme-accent: #66cc44;
+            --theme-border: #555555;
+            --theme-card-bg: rgba(20, 20, 20, 0.95);
+            --theme-main-bg: rgba(20, 20, 20, 0.94);
+            --theme-text: #ffffff;
+            --theme-muted: #aaaaaa;
+            --theme-button-bg: #55aa33;
+            --theme-button-text: #ffffff;
+        }
+
+        body.theme-deltarune {
+            --theme-accent: #ffffff;
+            --theme-border: #ffffff;
+            --theme-card-bg: #050514;
+            --theme-main-bg: rgba(5, 5, 20, 0.96);
+            --theme-text: #ffffff;
+            --theme-muted: #8888aa;
+            --theme-button-bg: #ffffff;
+            --theme-button-text: #000000;
+        }
+
+        body.theme-classic {
+            --theme-accent: #0000ee;
+            --theme-border: #333333;
+            --theme-card-bg: #fffdf5;
+            --theme-main-bg: rgba(255, 250, 235, 0.96);
+            --theme-text: #1a1a1a;
+            --theme-muted: #666666;
+            --theme-button-bg: #333333;
+            --theme-button-text: #ffffff;
+        }
+
+        /* =========================================================
            ОБЩИЕ СТИЛИ
            ========================================================= */
 
@@ -74,12 +144,12 @@
            ========================================================= */
 
         .main-container {
-            background-color: rgba(17, 17, 17, 0.96);
+            background-color: var(--theme-main-bg);
 
             width: 100%;
             max-width: 800px;
 
-            border: 3px double #ffffff;
+            border: 3px double var(--theme-border);
 
             padding: 30px;
 
@@ -176,21 +246,30 @@
 
         .game-title {
             font-size: 1.4rem;
-
             font-weight: bold;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            line-height: 1.35;
         }
 
-        /* РЕКОМЕНДАЦИИ */
+        .game-name {
+            display: block;
+        }
+
+        /* РЕКОМЕНДАЦИИ — всегда над названием */
         .recommendation-label {
              color: #ff0000;
              font-weight: bold;
-             margin-left: 8px;
+             margin: 0 0 2px 0;
              white-space: nowrap;
+             line-height: 1.2;
         }
 
         body.theme-none .recommendation-label {
-             color: #ff0000;
+             color: #0000ee;
              font-weight: bold;
+             margin: 0 0 2px 0;
         }
 
         .game-date {
@@ -1130,6 +1209,56 @@
         }
 
 
+
+        /* =========================================================
+           ОБЩИЕ ЭЛЕМЕНТЫ, ЗАВИСЯЩИЕ ОТ ТЕМЫ
+           ========================================================= */
+
+        body.theme-default .game-title,
+        body.theme-minecraft .game-title,
+        body.theme-deltarune .game-title,
+        body.theme-classic .game-title {
+            color: var(--theme-text);
+        }
+
+        body.theme-default .game-header,
+        body.theme-minecraft .game-header,
+        body.theme-deltarune .game-header,
+        body.theme-classic .game-header {
+            border-bottom-color: var(--theme-border);
+        }
+
+        body.theme-default .game-date,
+        body.theme-minecraft .game-date,
+        body.theme-deltarune .game-date,
+        body.theme-classic .game-date {
+            color: var(--theme-muted);
+        }
+
+        body.theme-default .more-btn,
+        body.theme-minecraft .more-btn,
+        body.theme-deltarune .more-btn,
+        body.theme-classic .more-btn {
+            color: var(--theme-accent);
+        }
+
+        body.theme-default .version-download,
+        body.theme-minecraft .version-download,
+        body.theme-deltarune .version-download,
+        body.theme-classic .version-download {
+            border-color: var(--theme-border);
+            color: var(--theme-text);
+        }
+
+        body.theme-default .download-btn,
+        body.theme-minecraft .download-btn,
+        body.theme-deltarune .download-btn,
+        body.theme-classic .download-btn {
+            background: var(--theme-button-bg);
+            color: var(--theme-button-text);
+        }
+
+        /* У каждой темы свой логотип задаётся в JS-конфигурации. */
     </style>
 </head>
 
@@ -1225,15 +1354,11 @@
                     >
 
                     <div class="game-title">
-
-                        Just A Corridor
-
+                        <span class="recommendation-label" hidden>Рекомендуем!</span>
+                        <span class="game-name">Just A Corridor</span>
                         <span class="game-date">
                             (28.07.2024) • Прямое скачивание • 16 MB
                         </span>
-
-                            <span class="recommendation-label" hidden>Рекомендуем!</span>
-
                     </div>
 
                 </div>
@@ -1340,15 +1465,11 @@
                     >
 
                     <div class="game-title">
-
-                        Король Гномстопии 2
-
+                        <span class="recommendation-label" hidden>Рекомендуем!</span>
+                        <span class="game-name">Король Гномстопии 2</span>
                         <span class="game-date">
                             (16.02.2025) • Прямое скачивание • 13 MB
                         </span>
-
-                            <span class="recommendation-label" hidden>Рекомендуем!</span>
-
                     </div>
 
                 </div>
@@ -1473,15 +1594,11 @@
                     >
 
                     <div class="game-title">
-
-                        Noise Avoider
-
+                        <span class="recommendation-label" hidden>Рекомендуем!</span>
+                        <span class="game-name">Noise Avoider</span>
                         <span class="game-date">
                             (19.08.2026) • Dropbox • 343 MB
                         </span>
-
-                            <span class="recommendation-label" hidden>Рекомендуем!</span>
-
                     </div>
 
                 </div>
@@ -1749,7 +1866,7 @@
                 "themes/minecraft/background.png",
 
             logo:
-                "themes/minecraft/solorsstore_minecraft.png",
+                "solorsstore_minecraft.png",
 
             font:
                 '"Minecraft", "Courier New", monospace'
@@ -1763,7 +1880,7 @@
                 "themes/deltarune/background.png",
 
             logo:
-                "themes/deltarune/solorsstore_deltarune.png",
+                "solorsstore_deltarune.png",
 
             font:
                 '"Deltarune", "Courier New", monospace'
@@ -1777,7 +1894,7 @@
                 "themes/classic/background.png",
 
             logo:
-                "themes/classic/solorsstore_classic.png",
+                "solorsstore_classic.png",
 
             font:
                 '"Times New Roman", Times, serif'
@@ -1824,16 +1941,18 @@
         "theme-" + SITE_THEME
     );
 
+    document.body.dataset.theme = SITE_THEME;
+
 
     /* =========================================================
        ФОН
        ========================================================= */
 
     if (currentTheme.background) {
-
         document.body.style.backgroundImage =
             `url("${currentTheme.background}")`;
-
+    } else {
+        document.body.style.backgroundImage = "none";
     }
 
 
@@ -2139,4 +2258,4 @@
 
 
 </body>
-    </html>
+</html>
