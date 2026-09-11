@@ -180,6 +180,19 @@
             font-weight: bold;
         }
 
+        /* РЕКОМЕНДАЦИИ */
+        .recommendation-label {
+             color: #ff0000;
+             font-weight: bold;
+             margin-left: 8px;
+             white-space: nowrap;
+        }
+
+        body.theme-none .recommendation-label {
+             color: #ff0000;
+             font-weight: bold;
+        }
+
         .game-date {
             font-size: 0.85rem;
 
@@ -1149,10 +1162,55 @@
 
 
             <!-- =====================================================
+                 КАК ДОБАВИТЬ НОВУЮ ИГРУ
+                 =====================================================
+
+                 Скопируй целиком любой блок .game-card и вставь его
+                 перед закрывающим </div> списка .games-list.
+
+                 Затем измени:
+                 1. data-recommended="true/false"
+                    true  = игра наверху + "Рекомендуем!"
+                    false = обычный порядок.
+
+                 2. Название игры внутри .game-title.
+
+                 3. Дату, способ скачивания и размер внутри .game-date.
+
+                 4. Описание внутри .game-desc.
+
+                 5. Версию внутри .latest-version.
+
+                 6. Ссылку на скачивание в href у .download-btn.
+
+                 7. Скриншоты:
+                    добавляй/удаляй <img src="..."> внутри
+                    .screenshots-grid.
+                    0 скриншотов: data-has-screen="false"
+                    1-2 скриншота: обычная сетка
+                    3+ скриншотов: автоматически включится слайдер.
+
+                 8. Иконку:
+                    поменяй src у .game-icon.
+                    Если иконка не нужна, оставь
+                    data-has-icon="false" у .game-header.
+
+                 9. Если нужно несколько версий, можно расширить
+                    .versions-container элементами .version-item.
+                    Для одной версии достаточно .latest-version.
+
+                 Пример:
+                 <div class="game-card" data-recommended="true">
+
+                 Порядок вручную менять не нужно:
+                 JavaScript сам поставит рекомендованные игры наверх.
+                 ===================================================== -->
+
+            <!-- =====================================================
                  ИГРА 1
                  ===================================================== -->
 
-            <div class="game-card">
+            <div class="game-card" data-recommended="false">
 
                 <div
                     class="game-header"
@@ -1173,6 +1231,8 @@
                         <span class="game-date">
                             (28.07.2024) • Прямое скачивание • 16 MB
                         </span>
+
+                            <span class="recommendation-label" hidden>Рекомендуем!</span>
 
                     </div>
 
@@ -1265,7 +1325,7 @@
                  ИГРА 2
                  ===================================================== -->
 
-            <div class="game-card">
+            <div class="game-card" data-recommended="false">
 
                 <div
                     class="game-header"
@@ -1286,6 +1346,8 @@
                         <span class="game-date">
                             (16.02.2025) • Прямое скачивание • 13 MB
                         </span>
+
+                            <span class="recommendation-label" hidden>Рекомендуем!</span>
 
                     </div>
 
@@ -1396,7 +1458,7 @@
                  ИГРА 3
                  ===================================================== -->
 
-            <div class="game-card">
+            <div class="game-card" data-recommended="false">
 
                 <div
                     class="game-header"
@@ -1417,6 +1479,8 @@
                         <span class="game-date">
                             (19.08.2026) • Dropbox • 343 MB
                         </span>
+
+                            <span class="recommendation-label" hidden>Рекомендуем!</span>
 
                     </div>
 
@@ -1549,6 +1613,64 @@
 
 
     /* =========================================================
+       СИСТЕМА РЕКОМЕНДАЦИЙ
+       =========================================================
+
+       У каждого .game-card есть атрибут:
+
+       data-recommended="true"  — игра рекомендуется:
+                                  она перемещается наверх,
+                                  появляется "Рекомендуем!"
+
+       data-recommended="false" — игра остаётся на своём месте.
+
+       Пример:
+       <div class="game-card" data-recommended="true">
+
+       Чтобы включить/выключить рекомендацию, меняй только true/false.
+    */
+
+    function applyRecommendations() {
+        const gamesList = document.querySelector(".games-list");
+
+        if (!gamesList) {
+            return;
+        }
+
+        const cards = Array.from(
+            gamesList.querySelectorAll(".game-card")
+        );
+
+        cards.forEach((card) => {
+            const isRecommended =
+                card.dataset.recommended === "true";
+
+            const label =
+                card.querySelector(".recommendation-label");
+
+            if (label) {
+                label.hidden = !isRecommended;
+            }
+        });
+
+        /* Рекомендуемые игры идут первыми, исходный порядок сохраняется. */
+        cards.sort((a, b) => {
+            const aRecommended =
+                a.dataset.recommended === "true" ? 1 : 0;
+
+            const bRecommended =
+                b.dataset.recommended === "true" ? 1 : 0;
+
+            return bRecommended - aRecommended;
+        });
+
+        cards.forEach((card) => {
+            gamesList.appendChild(card);
+        });
+    }
+
+
+    /* =========================================================
        НАСТРОЙКИ ТЕМ
        =========================================================
 
@@ -1567,6 +1689,36 @@
        Например:
 
        const SITE_THEME = "minecraft";
+
+       КАК ИЗМЕНЯТЬ ТЕМУ:
+       1. Фон:
+          в объекте нужной темы измени:
+          background: "путь/к/фону.png"
+
+          Например для classic:
+          background: "themes/classic/background.png"
+
+       2. Шрифт:
+          в объекте нужной темы измени:
+          font: '"Times New Roman", Times, serif'
+
+          Если используется свой .woff2-шрифт,
+          сначала добавь @font-face в CSS в разделе "ШРИФТЫ ТЕМ",
+          затем укажи его имя в font.
+
+       3. Логотип:
+          в объекте темы измени:
+          logo: "путь/к/логотипу.png"
+
+       4. Цвета, рамки, тени и внешний вид:
+          редактируй CSS-блок body.theme-ИМЯ_ТЕМЫ.
+          Например:
+          body.theme-classic { ... }
+
+       ВАЖНО:
+       Название темы в SITE_THEME должно совпадать
+       с названием объекта в themes и с CSS-классом
+       body.theme-ИМЯ_ТЕМЫ.
     */
 
 
@@ -1799,6 +1951,13 @@
 
 
     /* =========================================================
+       ПРИМЕНЕНИЕ РЕКОМЕНДАЦИЙ
+       ========================================================= */
+
+    applyRecommendations();
+
+
+    /* =========================================================
        АВТОМАТИЧЕСКОЕ СКРЫТИЕ [...]
        ========================================================= */
 
@@ -1980,4 +2139,4 @@
 
 
 </body>
-</html>
+    </html>
